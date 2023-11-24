@@ -6,12 +6,12 @@ const Op = db.Sequelize.Op;
 exports.create = async (req, res) => {
   try {
     // Validate request
-    if (!req.body.type) {
-      res.status(400).send({
-        message: "Content cannot be empty!"
-      });
-      return;
-    }
+    // if (!req.body.type) {
+    //   res.status(400).send({
+    //     message: "Content cannot be empty!"
+    //   });
+    //   return;
+    // }
     
     // Create a PassiveElement
     const passiveElement = {
@@ -22,6 +22,7 @@ exports.create = async (req, res) => {
     const data = await PassiveElement.create(passiveElement);
     res.send(data);
   } catch (err) {
+    console.log(err)
     res.status(500).send({
       message: err.message || "Some error occurred while creating the passiveElement"
     });
@@ -78,7 +79,7 @@ exports.update = async (req, res) => {
     };
     
     const num = await PassiveElement.update(passiveElement, {
-      where: { id: id }
+      where: { UID: id }
     });
 
     if (num == 1) {
@@ -104,7 +105,7 @@ exports.delete = async (req, res) => {
     const passiveElement = await PassiveElement.findByPk(id);
 
     const num = await PassiveElement.destroy({
-      where: { id: id }
+      where: { UID: id }
     });
 
     if (num == 1) {

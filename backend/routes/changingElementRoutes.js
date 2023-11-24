@@ -11,5 +11,5 @@ module.exports = (app) => {
     router.delete('/:id', changingElementController.delete);
 
 
-    app.use('/passiveelements', router);
+    app.use('/changingelements', router);
 }

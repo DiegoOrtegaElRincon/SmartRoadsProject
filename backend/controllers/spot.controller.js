@@ -78,7 +78,7 @@ exports.update = async (req, res) => {
         };
 
         const num = await Spot.update(spot, {
-            where: { id: id }
+            where: { UID: id }
         });
 
         if (num == 1) {
@@ -103,7 +103,7 @@ exports.delete = async (req, res) => {
         const id = req.params.id;
 
         const num = await Spot.destroy({
-            where: { id: id }
+            where: { UID: id }
         });
 
         if (num == 1) {
