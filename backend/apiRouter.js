@@ -4,9 +4,8 @@ const express = require('express');
 const apiRouter = express.Router();
 const { getAllActiveElementsSpots, getOneActiveElementSpot } = require('./controllers/controller');
 
-// Get all companies with employees
-
-apiRouter.get('/', async (req, res, next) => {
+// Obtener todos los elementos activos con spots
+apiRouter.get('/', async (req, res) => {
     try {
         const activeElements = await getAllActiveElementsSpots();
         res.status(200).json({ activeElements: activeElements });
@@ -16,6 +15,7 @@ apiRouter.get('/', async (req, res, next) => {
     }
 });
 
+// Middleware para manejar el parámetro UID
 apiRouter.param('UID', async (req, res, next, UID) => {
     try {
         const activeElement = await getOneActiveElementSpot(UID);
@@ -27,15 +27,9 @@ apiRouter.param('UID', async (req, res, next, UID) => {
     }
 });
 
-
-
-
-// Get company with its employees
-
-apiRouter.get('/:UID', (req, res, next) => {
-    res.status(200).json({ company: req.company });
+// Obtener un elemento activo por su UID
+apiRouter.get('/:UID', (req, res) => {
+    res.status(200).json({ activeElement: req.activeElement });
 });
-
-
 
 module.exports = apiRouter;

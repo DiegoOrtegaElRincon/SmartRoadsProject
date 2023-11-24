@@ -16,16 +16,6 @@ module.exports = (sequelize) => {
       type: DataTypes.ENUM('Active', 'Inactive', 'Pending'),
       allowNull: false,
     },
-    createdAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: sequelize.literal('CURRENT_TIMESTAMP'), // Valor por defecto a la fecha y hora actual
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      allowNull: true,
-      defaultValue: sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'), // Valor por defecto a la fecha y hora actual y se actualiza en cada modificación
-    },
     // Otros campos según tus necesidades
   });
 

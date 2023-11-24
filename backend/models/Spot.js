@@ -12,16 +12,6 @@ module.exports = (sequelize) => {
       type: DataTypes.GEOMETRY('POINT'),
       allowNull: false,
     },
-    createdAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: sequelize.literal('CURRENT_TIMESTAMP'), // Valor por defecto a la fecha y hora actual
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      allowNull: true,
-      defaultValue: sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'), // Valor por defecto a la fecha y hora actual y se actualiza en cada modificación
-    },
     // Puedes agregar más campos según tus necesidades
   });
 
