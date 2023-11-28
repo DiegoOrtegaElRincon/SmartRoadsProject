@@ -16,11 +16,12 @@ module.exports = (sequelize) => {
       type: DataTypes.ENUM('Active', 'Inactive', 'Pending'),
       allowNull: false,
     },
+    Location: {
+      type: DataTypes.GEOMETRY('POINT'),
+      allowNull: false,
+    },
     // Otros campos según tus necesidades
   });
-
-  // Definir la relación con Spot
-  // ChangingElement.hasMany(sequelize.models.Spot);
 
   return ChangingElement;
 };

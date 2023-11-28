@@ -1,23 +1,25 @@
-// models/PassiveElement.js
+// models/Admin.js
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  const PassiveElement = sequelize.define('PassiveElement', {
-    UID: {
-      type: DataTypes.BIGINT,
+  const Admin = sequelize.define('Admin', {
+    Id: {
+      type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-    },
-    Type: {
-      type: DataTypes.STRING,
       allowNull: false,
     },
-    Location: {
-      type: DataTypes.GEOMETRY('POINT'),
+    Username: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
+    Password: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
     // Otros campos según tus necesidades
   });
 
-  return PassiveElement;
+  return Admin;
 };

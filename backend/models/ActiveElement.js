@@ -23,8 +23,5 @@ module.exports = (sequelize) => {
     // Otros campos según tus necesidades
   });
 
-  // Definir la relación con Spot
-  // ActiveElement.hasMany(sequelize.models.Spot);
-
   return ActiveElement;
 };
