@@ -6,17 +6,21 @@ const Op = db.Sequelize.Op;
 exports.create = async (req, res) => {
   try {
     // Validate request
-    // if (!req.body.type) {
-    //   res.status(400).send({
-    //     message: "Content cannot be empty!"
-    //   });
-    //   return;
-    // }
+    if (!req.body.type || !req.body.location) {
+      res.status(400).send({
+        message: "Content cannot be empty!"
+      });
+      return;
+    }
     
     // Create a PassiveElement
     const passiveElement = {
-      Type: req.body.type
-    };
+      Type: req.body.type,
+      Location: {
+        type: 'Point',
+        coordinates: JSON.parse(req.body.location)
+      }
+    }
     
     // Save PassiveElement in the database
     const data = await PassiveElement.create(passiveElement);
@@ -66,7 +70,7 @@ exports.update = async (req, res) => {
     const id = req.params.id;
 
     // Validate request
-    if (!req.body.type) {
+    if (!req.body.type || !req.body.location) {
       res.status(400).send({
         message: "Content cannot be empty!"
       });
@@ -75,8 +79,12 @@ exports.update = async (req, res) => {
 
     // Create a PassiveElement
     const passiveElement = {
-      Type: req.body.type
-    };
+      Type: req.body.type,
+      Location: {
+        type: 'Point',
+        coordinates: JSON.parse(req.body.location)
+      }
+    }
     
     const num = await PassiveElement.update(passiveElement, {
       where: { UID: id }
