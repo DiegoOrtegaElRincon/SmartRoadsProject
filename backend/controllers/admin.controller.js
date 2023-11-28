@@ -12,7 +12,7 @@ exports.create = (req, res) => {
     }
     // Create a Admin
     const Admin = {
-        Id: req.body.id,
+        ID: req.body.id,
         Username: req.body.username,
         Password: req.body.password
     }
@@ -67,14 +67,14 @@ exports.update = (req, res) => {
     }
     // Create a Admin
     const Admin = {
-        Id: req.body.id,
+        ID: req.body.id,
         Username: req.body.username,
         Password: req.body.password
     }
 
     console.log(admin)
     Admin.update(admin, {
-        where: { Id: id }
+        where: { UID: id }
     }).then(num => {
         if (num == 1) {
             res.send({
@@ -105,7 +105,7 @@ exports.delete = (req, res) => {
             }
 
             return Admin.destroy({
-                where: { Id: id }
+                where: { UID: id }
             });
         })
         .then(() => {

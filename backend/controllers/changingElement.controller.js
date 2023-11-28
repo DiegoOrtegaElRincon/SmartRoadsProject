@@ -5,20 +5,15 @@ const Op = db.Sequelize.Op;
 // Create and Save a new ChangingElement
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.type || !req.body.status || !req.body.location) {
+  if (!req.body.type || !req.body.status) {
     res.status(400).send({
       message: "Content cannot be empty!"
     });
-    return;
   }
   // Create a ChangingElement
   const changingElement = {
     Type: req.body.type,
-    Status: req.body.status,
-    Location: {
-      type: 'Point',
-      coordinates: JSON.parse(req.body.location)
-    }
+    Status: req.body.status
   }
   // Save ChangingElement in the database
   ChangingElement.create(changingElement).then(data => {
@@ -64,7 +59,7 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
   const id = req.params.id;
 
-  if (!req.body.type || !req.body.status || !req.body.location) {
+  if (!req.body.type || !req.body.status) {
     res.status(400).send({
       message: "Content cannot be empty!"
     });
@@ -74,11 +69,7 @@ exports.update = (req, res) => {
   const changingElement = {
     Type: req.body.type,
     Status: req.body.status,
-    Location: {
-      type: 'Point',
-      coordinates: JSON.parse(req.body.location)
-    }
-  }
+  };
 
   ChangingElement.update(changingElement, {
     where: { UID: id }
