@@ -5,13 +5,13 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Admin
 exports.create = (req, res) => {
     // Validate request
-    if (!req.body.id || !req.body.username || !req.body.password) {
+    if (!req.body.username || !req.body.password) {
         res.status(400).send({
             message: "Content cannot be empty!"
         });
     }
     // Create a Admin
-    const Admin = {
+    const admin = {
         Id: req.body.id,
         Username: req.body.username,
         Password: req.body.password
@@ -59,20 +59,19 @@ exports.findOne = (req, res) => {
 // Update a Admin by the id in the request
 exports.update = (req, res) => {
     const id = req.params.id;
-    
-    if (!req.body.id || !req.body.username || !req.body.password) {
+
+    if (!req.body.username || !req.body.password) {
         res.status(400).send({
             message: "Content cannot be empty!"
         });
     }
     // Create a Admin
-    const Admin = {
+    const admin = {
         Id: req.body.id,
         Username: req.body.username,
         Password: req.body.password
     }
 
-    console.log(admin)
     Admin.update(admin, {
         where: { Id: id }
     }).then(num => {
@@ -96,26 +95,23 @@ exports.update = (req, res) => {
 // Delete a Admin with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;
-    Admin.findByPk(id)
-        .then(admin => {
-            if (!admin) {
-                return res.status(404).send({
-                    message: `Cannot delete. Admin with id=${id} not found.`
-                });
-            }
+    Admin.findByPk(id).then(admin => {
+        if (!admin) {
+            return res.status(404).send({
+                message: `Cannot delete. Admin with id=${id} not found.`
+            });
+        }
 
-            return Admin.destroy({
-                where: { Id: id }
-            });
-        })
-        .then(() => {
-            res.send({
-                message: "Admin was deleted successfully."
-            });
-        })
-        .catch(err => {
-            res.status(500).send({
-                message: "Could not delete Admin with id=" + id
-            });
+        return Admin.destroy({
+            where: { Id: id }
         });
+    }).then(() => {
+        res.send({
+            message: "Admin was deleted successfully."
+        });
+    }).catch(err => {
+        res.status(500).send({
+            message: "Could not delete Admin with id=" + id
+        });
+    });
 };

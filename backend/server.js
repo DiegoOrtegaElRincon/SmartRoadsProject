@@ -17,11 +17,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
 
-sequelize.authenticate()
-    .then(() => {
+sequelize.authenticate().then(() => {
         console.log('Connection has been established successfully.');
-    })
-    .catch(err => {
+    }).catch(err => {
         console.error('Unable to connect to the database:', err);
     });
 
@@ -36,5 +34,7 @@ require('./routes/changingElementRoutes')(app)
 require('./routes/passiveElementRoutes')(app)
 
 require('./routes/spotsRoutes')(app)
+
+require('./routes/adminRoutes')(app)
 
 module.exports = app;
