@@ -72,8 +72,9 @@ exports.update = (req, res) => {
     Speed: req.body.speed
   }
 
+  console.log(activeElement)
   ActiveElement.update(activeElement, {
-    where: { id: id }
+    where: { UID: id }
   }).then(num => {
     if (num == 1) {
       res.send({
@@ -85,6 +86,7 @@ exports.update = (req, res) => {
       });
     }
   }).catch(err => {
+    console.log(err)
     res.status(500).send({
       message: "Error updating ActiveElement with id=" + id
     });
@@ -103,7 +105,7 @@ exports.delete = (req, res) => {
       }
 
       return ActiveElement.destroy({
-        where: { id: id }
+        where: { UID: id }
       });
     })
     .then(() => {

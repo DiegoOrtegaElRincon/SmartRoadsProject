@@ -72,7 +72,7 @@ exports.update = (req, res) => {
   };
 
   ChangingElement.update(changingElement, {
-    where: { id: id }
+    where: { UID: id }
   })
     .then(num => {
       if (num == 1) {
@@ -93,15 +93,27 @@ exports.update = (req, res) => {
 };
 
 // Delete a ChangingElement with the specified id in the request
-exports.delete = (req, res) => {
-  const id = req.params.id;
-  ChangingElement.findByPk(id).then(changingElement => {
-    ChangingElement.destroy({
-      where: { id: id }
-    }).then().catch(err => {
-      res.status(500).send({
-        message: "Could not delete ChangingElement with id=" + id
-      });
+exports.delete = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const changingElement = await ChangingElement.findByPk(id);
+
+    const num = await ChangingElement.destroy({
+      where: { UID: id }
     });
-  })
+
+    if (num == 1) {
+      res.send({
+        message: "ChangingElement was deleted successfully."
+      });
+    } else {
+      res.status(404).send({
+        message: `Cannot delete ChangingElement with id=${id}. Maybe ChangingElement was not found!`
+      });
+    }
+  } catch (err) {
+    res.status(500).send({
+      message: "Could not delete ChangingElement with id=" + req.params.id
+    });
+  }
 };

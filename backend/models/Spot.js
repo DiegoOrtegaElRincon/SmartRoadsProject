@@ -8,17 +8,12 @@ module.exports = (sequelize) => {
       primaryKey: true,
       autoIncrement: true,
     },
-    location: {
+    Location: {
       type: DataTypes.GEOMETRY('POINT'),
       allowNull: false,
     },
     // Puedes agregar más campos según tus necesidades
   });
-
-  // Definir la relación con ActiveElement, ChangingElement, y PassiveElement
-  // Spot.belongsTo(sequelize.models.ActiveElement, { foreignKey: 'UID' });
-  // Spot.belongsTo(sequelize.models.ChangingElement, { foreignKey: 'UID' });
-  // Spot.belongsTo(sequelize.models.PassiveElement, { foreignKey: 'UID' });
 
   return Spot;
 };

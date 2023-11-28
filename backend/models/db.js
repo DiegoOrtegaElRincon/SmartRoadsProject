@@ -37,21 +37,16 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 // Importar modelos
-db.Spot = require('./Spot.js')(sequelize,Sequelize);
-db.ActiveElement = require('./ActiveElement.js')(sequelize,Sequelize);
-db.ChangingElement = require('./ChangingElement.js')(sequelize,Sequelize);
-db.PassiveElement = require('./PassiveElement.js')(sequelize,Sequelize);
+db.Spot = require('./Spot.js')(sequelize, Sequelize);
+db.ActiveElement = require('./ActiveElement.js')(sequelize, Sequelize);
+db.ChangingElement = require('./ChangingElement.js')(sequelize, Sequelize);
+db.PassiveElement = require('./PassiveElement.js')(sequelize, Sequelize);
 
 // Sincronizar todos los modelos con la base de datos
 sequelize.sync({ force: true }).then(() => {
     // Definir relaciones entre modelos después de sincronizar
     db.Spot.belongsTo(db.ActiveElement, { foreignKey: 'UID' });
-    db.Spot.belongsTo(db.ChangingElement, { foreignKey: 'UID' });
-    db.Spot.belongsTo(db.PassiveElement, { foreignKey: 'UID' });
-
     db.ActiveElement.hasMany(db.Spot, { foreignKey: 'UID' });
-    db.ChangingElement.hasMany(db.Spot, { foreignKey: 'UID' });
-    db.PassiveElement.hasMany(db.Spot, { foreignKey: 'UID' });
 
     console.log('Database and models synchronized successfully.');
 }).catch((err) => {
