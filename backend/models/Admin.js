@@ -18,6 +18,10 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    filename: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    }
     // Otros campos según tus necesidades
   });
 
