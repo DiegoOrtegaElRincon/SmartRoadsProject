@@ -11,6 +11,7 @@ module.exports = (app) => {
     router.put('/noimage/:id', adminController.updateNoImage);
     router.put('/:id', upload.single('file'), adminController.update);
     router.delete('/:id', adminController.delete);
+    router.delete('/', adminController.deleteAll)
 
     app.use('/admins', router);
 }

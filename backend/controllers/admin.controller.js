@@ -10,13 +10,12 @@ const { request } = require("http");
 exports.create = (req, res) => {
     // Validate request
     if (!req.body.username || !req.body.password) {
-        res.status(400).send({
+        return res.status(400).send({
             message: "Content cannot be empty!"
         });
     }
     // Create a Admin
     const admin = {
-        Id: req.body.id,
         Username: req.body.username,
         Password: req.body.password,
         filename: req.file ? req.file.filename : ""
@@ -87,7 +86,6 @@ exports.update = async (req, res) => {
     }
 
     try {
-        console.log("PRE PRE UPDATE", IsThere)
 
         if (IsThere.filename && IsThere.filename != "") {
             const directoryPath = path.join(__dirname, '../public/images', IsThere.filename);
@@ -99,13 +97,9 @@ exports.update = async (req, res) => {
             admin.filename = img
         }
 
-        console.log("Pre UPDATE", IsThere)
-
         await IsThere.update(admin, {
             where: { Id: id }
         });
-
-        console.log("POST UPDATE", IsThere)
         res.send({
             message: "Admin was updated successfully."
         });
@@ -127,9 +121,12 @@ exports.updateNoImage = async (req, res) => {
     };
 
     console.log(admin)
-    Admin.update(admin, {
-        where: { Id: id }
-    }).then(async num => {
+
+    try {
+        const num = await Admin.update(admin, {
+            where: { Id: id }
+        });
+
         if (num == 1) {
             console.log(uwu.get({ plain: true }))
             uwu = uwu.get({ plain: true })
@@ -146,8 +143,18 @@ exports.updateNoImage = async (req, res) => {
             } else {
                 console.error('File does not exist: ', directoryPath);
             }
+            res.send({
+                message: "Admin was updated successfully."
+            });
+        } else {
+            throw new Error("Failed to update Admin");
         }
-    })
+    } catch (err) {
+        console.log(err);
+        res.status(500).send({
+            message: "Error updating Admin with id=" + id
+        });
+    }
 };
 
 
@@ -193,3 +200,20 @@ exports.delete = async (req, res) => {
         })
     }
 }
+
+
+exports.deleteAll = (req, res) => {
+    Admin.destroy({
+      where: {},
+      truncate: false
+    })
+      .then(nums => {
+        res.send({ message: `${nums} Admins were deleted successfully!` });
+      })
+      .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while removing all Admins."
+        });
+      });
+  };
