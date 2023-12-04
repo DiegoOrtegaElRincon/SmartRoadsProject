@@ -2,22 +2,21 @@ import React from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-
-import AddTutorial from "./components/AddTutorial";
-import Tutorial from "./components/Tutorial";
-import TutorialsList from "./components/TutorialsList";
+import AdminsList from "./components/AdminList";
+import AddAdmin from "./components/AddAdmin";
+import Admin from "./components/Admin";
 
 function App() {
   return (
     <div>
       <nav className="navbar navbar-expand navbar-dark bg-dark">
-        <a href="/tutorials" className="navbar-brand">
+        <a href="/admins" className="navbar-brand">
           bezKoder
         </a>
         <div className="navbar-nav mr-auto">
           <li className="nav-item">
-            <Link to={"/tutorials"} className="nav-link">
-              Tutorials
+            <Link to={"/admins"} className="nav-link">
+              Admins
             </Link>
           </li>
           <li className="nav-item">
@@ -30,10 +29,10 @@ function App() {
 
       <div className="container mt-3">
         <Routes>
-          <Route path="/" element={<TutorialsList/>} />
-          <Route path="/tutorials" element={<TutorialsList/>} />
-          <Route path="/add" element={<AddTutorial/>} />
-          <Route path="/tutorials/:id" element={<Tutorial/>} />
+          <Route path="/" element={<AdminsList />} />
+          <Route path="/admins" element={<AdminsList />} />
+          <Route path="/add" element={<AddAdmin />} />
+          <Route path="/admins/:id" element={<Admin />} />
         </Routes>
       </div>
     </div>

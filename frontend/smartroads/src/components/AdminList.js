@@ -1,26 +1,26 @@
 import React, { useState, useEffect } from "react";
-import TutorialDataService from "../services/TutorialService";
+import AdminService from "../services/AdminService"; // Update with the actual service
 import { Link } from "react-router-dom";
 
-const TutorialsList = () => {
-    const [tutorials, setTutorials] = useState([]);
-    const [currentTutorial, setCurrentTutorial] = useState(null);
+const AdminsList = () => {
+    const [admins, setAdmins] = useState([]);
+    const [currentAdmin, setCurrentAdmin] = useState(null);
     const [currentIndex, setCurrentIndex] = useState(-1);
-    const [searchTitle, setSearchTitle] = useState("");
+    const [searchUsername, setSearchUsername] = useState("");
 
     useEffect(() => {
-        retrieveTutorials();
+        retrieveAdmins();
     }, []);
 
-    const onChangeSearchTitle = e => {
-        const searchTitle = e.target.value;
-        setSearchTitle(searchTitle);
+    const onChangeSearchUsername = e => {
+        const searchUsername = e.target.value;
+        setSearchUsername(searchUsername);
     };
 
-    const retrieveTutorials = () => {
-        TutorialDataService.getAll()
+    const retrieveAdmins = () => {
+        AdminService.getAll()
             .then(response => {
-                setTutorials(response.data);
+                setAdmins(response.data);
                 console.log(response.data);
             })
             .catch(e => {
@@ -29,18 +29,18 @@ const TutorialsList = () => {
     };
 
     const refreshList = () => {
-        retrieveTutorials();
-        setCurrentTutorial(null);
+        retrieveAdmins();
+        setCurrentAdmin(null);
         setCurrentIndex(-1);
     };
 
-    const setActiveTutorial = (tutorial, index) => {
-        setCurrentTutorial(tutorial);
+    const setActiveAdmin = (admin, index) => {
+        setCurrentAdmin(admin);
         setCurrentIndex(index);
     };
 
-    const removeAllTutorials = () => {
-        TutorialDataService.removeAll()
+    const removeAllAdmins = () => {
+        AdminService.removeAll()
             .then(response => {
                 console.log(response.data);
                 refreshList();
@@ -50,10 +50,10 @@ const TutorialsList = () => {
             });
     };
 
-    const findByTitle = () => {
-        TutorialDataService.findByTitle(searchTitle)
+    const findByUsername = () => {
+        AdminService.findByUsername(searchUsername)
             .then(response => {
-                setTutorials(response.data);
+                setAdmins(response.data);
                 console.log(response.data);
             })
             .catch(e => {
@@ -68,15 +68,15 @@ const TutorialsList = () => {
                     <input
                         type="text"
                         className="form-control"
-                        placeholder="Search by title"
-                        value={searchTitle}
-                        onChange={onChangeSearchTitle}
+                        placeholder="Search by username"
+                        value={searchUsername}
+                        onChange={onChangeSearchUsername}
                     />
                     <div className="input-group-append">
                         <button
                             className="btn btn-outline-secondary"
                             type="button"
-                            onClick={findByTitle}
+                            onClick={findByUsername}
                         >
                             Search
                         </button>
@@ -84,55 +84,52 @@ const TutorialsList = () => {
                 </div>
             </div>
             <div className="col-md-6">
-                <h4>Tutorials List</h4>
+                <h4>Admins List</h4>
 
                 <ul className="list-group">
-                    {tutorials &&
-                        tutorials.map((tutorial, index) => (
+                    {admins &&
+                        admins.map((admin, index) => (
                             <li
                                 className={
                                     "list-group-item " + (index === currentIndex ? "active" : "")
                                 }
-                                onClick={() => setActiveTutorial(tutorial, index)}
+                                onClick={() => setActiveAdmin(admin, index)}
                                 key={index}
                             >
-                                {tutorial.title}
+                                {admin.Username}
                             </li>
                         ))}
                 </ul>
 
                 <button
                     className="m-3 btn btn-sm btn-danger"
-                    onClick={removeAllTutorials}
+                    onClick={removeAllAdmins}
                 >
                     Remove All
                 </button>
             </div>
             <div className="col-md-6">
-                {currentTutorial ? (
+                {currentAdmin ? (
                     <div>
-                        <h4>Tutorial</h4>
+                        <h4>Admin</h4>
                         <div>
                             <label>
-                                <strong>Title:</strong>
+                                <strong>Username:</strong>
                             </label>{" "}
-                            {currentTutorial.title}
+                            {currentAdmin.Username}
                         </div>
                         <div>
                             <label>
-                                <strong>Description:</strong>
+                                <strong>Password:</strong>
                             </label>{" "}
-                            {currentTutorial.description}
+                            {currentAdmin.Password}
                         </div>
                         <div>
-                            <label>
-                                <strong>Status:</strong>
-                            </label>{" "}
-                            {currentTutorial.published ? "Published" : "Pending"}
+                            {/* Add other fields as needed */}
                         </div>
 
                         <Link
-                            to={"/tutorials/" + currentTutorial.id}
+                            to={"/admins/" + currentAdmin.Id}
                             className="badge badge-warning"
                         >
                             Edit
@@ -141,7 +138,7 @@ const TutorialsList = () => {
                 ) : (
                     <div>
                         <br />
-                        <p>Please click on a Tutorial...</p>
+                        <p>Please click on an Admin...</p>
                     </div>
                 )}
             </div>
@@ -149,4 +146,4 @@ const TutorialsList = () => {
     );
 };
 
-export default TutorialsList;
+export default AdminsList;
