@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import AdminDataService from "../services/AdminService";
+import AdminDataService from "../../services/AdminService";
 
 const AddAdmin = () => {
   const initialAdminState = {
     Username: "",
     Password: "",
-    filename: null,
+    file: null,
   };
 
   const [admin, setAdmin] = useState(initialAdminState);
@@ -19,21 +19,22 @@ const AddAdmin = () => {
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-    setAdmin({ ...admin, filename: file });
+    //console.log(file)
+    setAdmin({ ...admin, file: file });
   };
 
   const saveAdmin = () => {
     const formData = new FormData();
-    formData.append("username", admin.Username);
-    formData.append("password", admin.Password);
-    formData.append("filename", admin.filename);
-
+    formData.append("Username", admin.Username);
+    formData.append("Password", admin.Password);
+    formData.append("file", admin.file);
+    console.log(formData)
     AdminDataService.create(formData)
       .then((response) => {
         setAdmin({
           Username: response.data.Username,
           Password: response.data.Password,
-          filename: response.data.filename,
+          file: response.data.file,
         });
         setSubmitted(true);
         setError(null); // Limpiar cualquier mensaje de error existente
@@ -98,6 +99,7 @@ const AddAdmin = () => {
               required
               onChange={handleFileChange}
               name="filename"
+              multiple
             />
           </div>
 

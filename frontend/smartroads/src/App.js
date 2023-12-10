@@ -2,16 +2,16 @@ import React from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import AdminsList from "./components/AdminList";
-import AddAdmin from "./components/AddAdmin";
-import Admin from "./components/Admin";
+import AdminsList from "./pages/admin/AdminList";
+import AddAdmin from "./pages/admin/AddAdmin";
+import Admin from "./pages/admin/Admin";
 
 function App() {
   return (
     <div>
       <nav className="navbar navbar-expand navbar-dark bg-dark">
         <a href="/admins" className="navbar-brand">
-          bezKoder
+          Admin View
         </a>
         <div className="navbar-nav mr-auto">
           <li className="nav-item">
