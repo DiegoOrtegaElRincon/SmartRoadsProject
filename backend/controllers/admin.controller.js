@@ -3,11 +3,10 @@ const Admin = db.Admin;
 const Op = db.Sequelize.Op;
 const path = require('path');
 const fs = require("fs");
-const { where } = require("sequelize");
-const { request } = require("http");
 
 // Create and Save a new Admin
 exports.create = (req, res) => {
+    // console.log(req)
     // Validate request
     if (!req.body.username || !req.body.password) {
         return res.status(400).send({

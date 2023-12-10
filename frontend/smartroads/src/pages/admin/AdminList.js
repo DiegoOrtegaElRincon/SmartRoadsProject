@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
-import AdminService from "../services/AdminService"; // Update with the actual service
+import AdminService from "../../services/AdminService"; // Update with the actual service
 import { Link } from "react-router-dom";
+
 
 const AdminsList = () => {
     const [admins, setAdmins] = useState([]);
     const [currentAdmin, setCurrentAdmin] = useState(null);
     const [currentIndex, setCurrentIndex] = useState(-1);
     const [searchUsername, setSearchUsername] = useState("");
+
+    const img = `http://localhost:3000/images/${currentAdmin.filename}`
 
     useEffect(() => {
         retrieveAdmins();
@@ -125,7 +128,11 @@ const AdminsList = () => {
                             {currentAdmin.Password}
                         </div>
                         <div>
-                            {/* Add other fields as needed */}
+                            <label>
+                                <strong>Image:</strong>
+                            </label>
+                            <br />
+                            <img src={img} alt="Admin Image" />
                         </div>
 
                         <Link

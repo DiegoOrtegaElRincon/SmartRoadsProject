@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from 'react-router-dom';
-import AdminService from "../services/AdminService"; // Update with the actual service
+import AdminService from "../../services/AdminService"; // Update with the actual service
 
 const Admin = () => {
     const { id } = useParams();
     let navigate = useNavigate();
+    const imageUrl = currentAdmin ? `/../../../../../../backend/public/images${currentAdmin.filename}` : null;
 
     const initialAdminState = {
         Id: null,
@@ -85,9 +86,6 @@ const Admin = () => {
                                 value={currentAdmin.Password}
                                 onChange={handleInputChange}
                             />
-                        </div>
-                        <div className="form-group">
-                            {/* Add other fields as needed */}
                         </div>
                     </form>
 
