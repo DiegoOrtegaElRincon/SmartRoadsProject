@@ -6,7 +6,6 @@ const fs = require("fs");
 
 // Create and Save a new Admin
 exports.create = (req, res) => {
-    // console.log(req)
     // Validate request
     if (!req.body.username || !req.body.password) {
         return res.status(400).send({

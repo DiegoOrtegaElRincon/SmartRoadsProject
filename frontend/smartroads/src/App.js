@@ -5,6 +5,9 @@ import "./App.css";
 import AdminsList from "./pages/admin/AdminList";
 import AddAdmin from "./pages/admin/AddAdmin";
 import Admin from "./pages/admin/Admin";
+import ActiveElementsList from "./pages/activeelement/ActiveElementList";
+import ActiveElement from "./pages/activeelement/ActiveElement";
+import AddActiveElement from "./pages/activeelement/AddActiveElement";
 
 function App() {
   return (
@@ -20,8 +23,8 @@ function App() {
             </Link>
           </li>
           <li className="nav-item">
-            <Link to={"/add"} className="nav-link">
-              Add
+            <Link to={"/activeelements"} className="nav-link">
+              Active Element
             </Link>
           </li>
         </div>
@@ -31,8 +34,11 @@ function App() {
         <Routes>
           <Route path="/" element={<AdminsList />} />
           <Route path="/admins" element={<AdminsList />} />
-          <Route path="/add" element={<AddAdmin />} />
+          <Route path="/add-admins" element={<AddAdmin />} />
           <Route path="/admins/:id" element={<Admin />} />
+          <Route path="/activeelements" element={<ActiveElementsList />} />
+          <Route path="/add-activeelements" element={<AddActiveElement />} />
+          <Route path="/activeelements/:id" element={<ActiveElement />} />
         </Routes>
       </div>
     </div>

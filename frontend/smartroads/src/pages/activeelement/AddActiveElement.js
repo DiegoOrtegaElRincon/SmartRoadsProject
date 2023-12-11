@@ -1,40 +1,34 @@
 import React, { useState } from "react";
-import AdminDataService from "../../services/AdminService";
+import ActiveElementDataService from "../../services/ActiveElementService";
 
-const AddAdmin = () => {
-  const initialAdminState = {
-    Username: "",
-    Password: "",
-    file: null,
+const AddActiveElement = () => {
+  const initialActiveElementState = {
+    Type: "",
+    Status: "",
+    Speed: "",
   };
 
-  const [admin, setAdmin] = useState(initialAdminState);
+  const [activeElement, setActiveElement] = useState(initialActiveElementState);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(null);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setAdmin({ ...admin, [name]: value });
+    setActiveElement({ ...activeElement, [name]: value });
   };
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    //console.log(file)
-    setAdmin({ ...admin, file: file });
-  };
-
-  const saveAdmin = () => {
+  const saveActiveElement = () => {
     const formData = new FormData();
-    formData.append("Username", admin.Username);
-    formData.append("Password", admin.Password);
-    formData.append("file", admin.file);
+    formData.append("type", activeElement.Type);
+    formData.append("status", activeElement.Status);
+    formData.append("speed", activeElement.Speed);
     console.log(formData)
-    AdminDataService.create(formData)
+    ActiveElementDataService.create(formData)
       .then((response) => {
-        setAdmin({
-          Username: response.data.Username,
-          Password: response.data.Password,
-          file: response.data.file,
+        setActiveElement({
+          Type: response.data.Type,
+          Status: response.data.Status,
+          Speed: response.data.Speed,
         });
         setSubmitted(true);
         setError(null); // Limpiar cualquier mensaje de error existente
@@ -46,8 +40,8 @@ const AddAdmin = () => {
       });
   };
 
-  const newAdmin = () => {
-    setAdmin(initialAdminState);
+  const newActiveElement = () => {
+    setActiveElement(initialActiveElementState);
     setSubmitted(false);
     setError(null); // Limpiar cualquier mensaje de error existente al iniciar un nuevo registro
   };
@@ -58,52 +52,52 @@ const AddAdmin = () => {
       {submitted ? (
         <div>
           <h4>You submitted successfully!</h4>
-          <button className="btn btn-success" onClick={newAdmin}>
+          <button className="btn btn-success" onClick={newActiveElement}>
             Add
           </button>
         </div>
       ) : (
         <div>
           <div className="form-group">
-            <label htmlFor="Username">Username</label>
+            <label htmlFor="Type">Type</label>
             <input
               type="text"
               className="form-control"
-              id="Username"
+              id="Type"
               required
-              value={admin.Username}
+              value={activeElement.Type}
               onChange={handleInputChange}
-              name="Username"
+              name="Type"
             />
           </div>
 
           <div className="form-group">
-            <label htmlFor="Password">Password</label>
+            <label htmlFor="Status">Status</label>
             <input
               type="text"
               className="form-control"
-              id="Password"
+              id="Status"
               required
-              value={admin.Password}
+              value={activeElement.Status}
               onChange={handleInputChange}
-              name="Password"
+              name="Status"
             />
           </div>
 
           <div className="form-group">
-            <label htmlFor="filename">Filename</label>
+            <label htmlFor="Speed">Speed</label>
             <input
-              type="file"
+              type="Speed"
               className="form-control"
-              id="filename"
+              id="Speed"
               required
-              onChange={handleFileChange}
-              name="filename"
+              onChange={handleInputChange}
+              name="Speed"
               multiple
             />
           </div>
 
-          <button onClick={saveAdmin} className="btn btn-success">
+          <button onClick={saveActiveElement} className="btn btn-success">
             Submit
           </button>
         </div>
@@ -112,4 +106,4 @@ const AddAdmin = () => {
   );
 };
 
-export default AddAdmin;
+export default AddActiveElement;

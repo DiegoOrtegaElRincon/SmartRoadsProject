@@ -16,6 +16,7 @@ exports.create = (req, res) => {
     Status: req.body.status,
     Speed: req.body.speed
   }
+  console.log(req.body.type)
   // Save ActiveElement in the database
   ActiveElement.create(activeElement).then(data => {
     res.send(data);
@@ -116,6 +117,22 @@ exports.delete = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message: "Could not delete ActiveElement with id=" + id
+      });
+    });
+};
+
+exports.deleteAll = (req, res) => {
+  ActiveElement.destroy({
+    where: {},
+    truncate: false
+  })
+    .then(nums => {
+      res.send({ message: `${nums} ActiveElement were deleted successfully!` });
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while removing all ActiveElement."
       });
     });
 };

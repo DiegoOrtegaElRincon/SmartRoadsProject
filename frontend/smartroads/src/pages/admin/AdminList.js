@@ -9,7 +9,7 @@ const AdminsList = () => {
     const [currentIndex, setCurrentIndex] = useState(-1);
     const [searchUsername, setSearchUsername] = useState("");
 
-    const img = `http://localhost:3000/images/${currentAdmin.filename}`
+    const img = `http://localhost:3000/images/${currentAdmin?.filename}`
 
     useEffect(() => {
         retrieveAdmins();
@@ -149,6 +149,13 @@ const AdminsList = () => {
                     </div>
                 )}
             </div>
+
+            <button className="btn btn-success">
+                <Link to={"/add-admins"} className="link">
+                    Add
+                </Link>
+            </button>
+
         </div>
     );
 };
