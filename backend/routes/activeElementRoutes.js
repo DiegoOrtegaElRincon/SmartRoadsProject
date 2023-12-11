@@ -9,6 +9,7 @@ module.exports = (app) => {
     router.get('/:id', activeElementController.findOne);
     router.put('/:id', activeElementController.update);
     router.delete('/:id', activeElementController.delete);
+    router.delete('/', activeElementController.deleteAll)
 
     app.use('/activeelements', router);
 }

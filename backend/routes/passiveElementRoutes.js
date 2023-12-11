@@ -9,6 +9,7 @@ module.exports = (app) => {
     router.get('/:id', passiveElementController.findOne);
     router.put('/:id', passiveElementController.update);
     router.delete('/:id', passiveElementController.delete);
+    router.delete('/', passiveElementController.deleteAll)
 
 
     app.use('/passiveelements', router);

@@ -126,3 +126,19 @@ exports.delete = async (req, res) => {
     });
   }
 };
+
+exports.deleteAll = (req, res) => {
+  ChangingElement.destroy({
+    where: {},
+    truncate: false
+  })
+    .then(nums => {
+      res.send({ message: `${nums} ChangingElement were deleted successfully!` });
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while removing all ChangingElement."
+      });
+    });
+};
