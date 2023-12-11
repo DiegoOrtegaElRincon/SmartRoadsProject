@@ -9,6 +9,7 @@ router.get('/', spotController.findAll);
 router.get('/:id', spotController.findOne);
 router.put('/:id', spotController.update);
 router.delete('/:id', spotController.delete);
+router.delete('/', spotController.deleteAll)
 
 
 app.use('/spots', router);

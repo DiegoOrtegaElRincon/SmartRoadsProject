@@ -131,3 +131,19 @@ exports.delete = async (req, res) => {
     });
   }
 };
+
+exports.deleteAll = (req, res) => {
+  PassiveElement.destroy({
+    where: {},
+    truncate: false
+  })
+    .then(nums => {
+      res.send({ message: `${nums} PassiveElement were deleted successfully!` });
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while removing all PassiveElement."
+      });
+    });
+};

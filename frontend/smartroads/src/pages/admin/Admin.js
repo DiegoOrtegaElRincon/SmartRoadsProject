@@ -5,7 +5,6 @@ import AdminService from "../../services/AdminService"; // Update with the actua
 const Admin = () => {
     const { id } = useParams();
     let navigate = useNavigate();
-    const imageUrl = currentAdmin ? `/../../../../../../backend/public/images${currentAdmin.filename}` : null;
 
     const initialAdminState = {
         Id: null,
