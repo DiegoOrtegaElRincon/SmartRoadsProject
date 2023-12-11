@@ -1,5 +1,6 @@
 const config = require('../config.js');
 const Sequelize = require('sequelize');
+const bcrypt = require('bcryptjs');
 
 const { host, port, user, password, database } = config.database;
 
@@ -39,12 +40,29 @@ db.PassiveElement = require('./PassiveElement.js')(sequelize, Sequelize);
 db.Admin = require('./Admin.js')(sequelize, Sequelize);
 
 // Sincronizar todos los modelos con la base de datos
-sequelize.sync({ force: true }).then(() => {
+sequelize.sync({ force: true }).then(async () => {
     // Definir relaciones entre modelos después de sincronizar
     db.Spot.belongsTo(db.ActiveElement, { foreignKey: 'UID' });
     db.ActiveElement.hasMany(db.Spot, { foreignKey: 'UID' });
 
     console.log('Database and models synchronized successfully.');
+
+    const existingAdmin = await db.Admin.findOne({ where: { Username: 'prueba' } });
+
+    if (!existingAdmin) {
+        const hashedPassword = await bcrypt.hash('prueba', 10);
+
+        const createdAdmin = await db.Admin.create({
+            Username: 'prueba',
+            Password: hashedPassword,
+            filename: ''
+        });
+
+        console.log('Admin predeterminado creado con éxito.');
+
+        console.log('Admin Details:', createdAdmin.toJSON());
+    }
+
 }).catch((err) => {
     console.error('Error synchronizing database and models:', err);
 });
