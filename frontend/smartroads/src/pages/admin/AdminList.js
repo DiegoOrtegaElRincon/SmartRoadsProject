@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import AdminService from "../../services/AdminService"; // Update with the actual service
 import { Link } from "react-router-dom";
+import AdminHeader from "../../components/header/AdminHeader";
 
 
 const AdminsList = () => {
@@ -65,97 +66,101 @@ const AdminsList = () => {
     };
 
     return (
-        <div className="list row">
-            <div className="col-md-8">
-                <div className="input-group mb-3">
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Search by username"
-                        value={searchUsername}
-                        onChange={onChangeSearchUsername}
-                    />
-                    <div className="input-group-append">
-                        <button
-                            className="btn btn-outline-secondary"
-                            type="button"
-                            onClick={findByUsername}
-                        >
-                            Search
-                        </button>
+        <div>
+            <AdminHeader />
+            <div className="list row">
+
+                <div className="col-md-8">
+                    <div className="input-group mb-3">
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Search by username"
+                            value={searchUsername}
+                            onChange={onChangeSearchUsername}
+                        />
+                        <div className="input-group-append">
+                            <button
+                                className="btn btn-outline-secondary"
+                                type="button"
+                                onClick={findByUsername}
+                            >
+                                Search
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div className="col-md-6">
-                <h4>Admins List</h4>
+                <div className="col-md-6">
+                    <h4>Admins List</h4>
 
-                <ul className="list-group">
-                    {admins &&
-                        admins.map((admin, index) => (
-                            <li
-                                className={
-                                    "list-group-item " + (index === currentIndex ? "active" : "")
-                                }
-                                onClick={() => setActiveAdmin(admin, index)}
-                                key={index}
+                    <ul className="list-group">
+                        {admins &&
+                            admins.map((admin, index) => (
+                                <li
+                                    className={
+                                        "list-group-item " + (index === currentIndex ? "active" : "")
+                                    }
+                                    onClick={() => setActiveAdmin(admin, index)}
+                                    key={index}
+                                >
+                                    {admin.Username}
+                                </li>
+                            ))}
+                    </ul>
+
+                    <button
+                        className="m-3 btn btn-sm btn-danger"
+                        onClick={removeAllAdmins}
+                    >
+                        Remove All
+                    </button>
+                </div>
+                <div className="col-md-6">
+                    {currentAdmin ? (
+                        <div>
+                            <h4>Admin</h4>
+                            <div>
+                                <label>
+                                    <strong>Username:</strong>
+                                </label>{" "}
+                                {currentAdmin.Username}
+                            </div>
+                            <div>
+                                <label>
+                                    <strong>Password:</strong>
+                                </label>{" "}
+                                {currentAdmin.Password}
+                            </div>
+                            <div>
+                                <label>
+                                    <strong>Image:</strong>
+                                </label>
+                                <br />
+                                <img src={img} alt="Admin Image" />
+                            </div>
+
+                            <Link
+                                to={"/admins/" + currentAdmin.Id}
+                                className="badge badge-warning"
                             >
-                                {admin.Username}
-                            </li>
-                        ))}
-                </ul>
-
-                <button
-                    className="m-3 btn btn-sm btn-danger"
-                    onClick={removeAllAdmins}
-                >
-                    Remove All
-                </button>
-            </div>
-            <div className="col-md-6">
-                {currentAdmin ? (
-                    <div>
-                        <h4>Admin</h4>
-                        <div>
-                            <label>
-                                <strong>Username:</strong>
-                            </label>{" "}
-                            {currentAdmin.Username}
+                                Edit
+                            </Link>
                         </div>
+                    ) : (
                         <div>
-                            <label>
-                                <strong>Password:</strong>
-                            </label>{" "}
-                            {currentAdmin.Password}
-                        </div>
-                        <div>
-                            <label>
-                                <strong>Image:</strong>
-                            </label>
                             <br />
-                            <img src={img} alt="Admin Image" />
+                            <p>Please click on an Admin...</p>
                         </div>
+                    )}
+                </div>
 
-                        <Link
-                            to={"/admins/" + currentAdmin.Id}
-                            className="badge badge-warning"
-                        >
-                            Edit
-                        </Link>
-                    </div>
-                ) : (
-                    <div>
-                        <br />
-                        <p>Please click on an Admin...</p>
-                    </div>
-                )}
+                <button className="btn btn-success">
+                    <Link to={"/add-admins"} className="link">
+                        Add
+                    </Link>
+                </button>
+
             </div>
-
-            <button className="btn btn-success">
-                <Link to={"/add-admins"} className="link">
-                    Add
-                </Link>
-            </button>
-
         </div>
     );
 };

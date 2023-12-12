@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from 'react-router-dom';
 import AdminService from "../../services/AdminService"; // Update with the actual service
+import AdminHeader from "../../components/header/AdminHeader";
 
 const Admin = () => {
     const { id } = useParams();
@@ -59,55 +60,59 @@ const Admin = () => {
     };
 
     return (
+
         <div>
-            {currentAdmin ? (
-                <div className="edit-form">
-                    <h4>Admin</h4>
-                    <form>
-                        <div className="form-group">
-                            <label htmlFor="Username">Username</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="Username"
-                                name="Username"
-                                value={currentAdmin.Username}
-                                onChange={handleInputChange}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="Password">Password</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="Password"
-                                name="Password"
-                                value={currentAdmin.Password}
-                                onChange={handleInputChange}
-                            />
-                        </div>
-                    </form>
+            <AdminHeader />
+            <div>
+                {currentAdmin ? (
+                    <div className="edit-form">
+                        <h4>Admin</h4>
+                        <form>
+                            <div className="form-group">
+                                <label htmlFor="Username">Username</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="Username"
+                                    name="Username"
+                                    value={currentAdmin.Username}
+                                    onChange={handleInputChange}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="Password">Password</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="Password"
+                                    name="Password"
+                                    value={currentAdmin.Password}
+                                    onChange={handleInputChange}
+                                />
+                            </div>
+                        </form>
 
-                    <button className="badge badge-danger mr-2" type="button" onClick={deleteAdmin}>
-                        Delete
-                    </button>
+                        <button className="badge badge-danger mr-2" type="button" onClick={deleteAdmin}>
+                            Delete
+                        </button>
 
-                    <button
-                        type="submit"
-                        className="badge badge-success"
-                        onClick={updateAdmin}
-                    >
-                        Update
-                    </button>
-                    <p>{message}</p>
-                </div>
-            ) : (
-                <div>
-                    <br />
-                    <p>Please click on an Admin...</p>
-                </div>
-            )}
-        </div>
+                        <button
+                            type="submit"
+                            className="badge badge-success"
+                            onClick={updateAdmin}
+                        >
+                            Update
+                        </button>
+                        <p>{message}</p>
+                    </div>
+                ) : (
+                    <div>
+                        <br />
+                        <p>Please click on an Admin...</p>
+                    </div>
+                )}
+            </div>
+        </div >
     );
 };
 

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import AdminDataService from "../../services/AdminService";
+import AdminHeader from "../../components/header/AdminHeader";
 
 const AddAdmin = () => {
   const initialAdminState = {
@@ -52,61 +53,65 @@ const AddAdmin = () => {
   };
 
   return (
-    <div className="submit-form">
-      {error && <div className="alert alert-danger">{error}</div>}
-      {submitted ? (
-        <div>
-          <h4>You submitted successfully!</h4>
-          <button className="btn btn-success" onClick={newAdmin}>
-            Add
-          </button>
-        </div>
-      ) : (
-        <div>
-          <div className="form-group">
-            <label htmlFor="Username">Username</label>
-            <input
-              type="text"
-              className="form-control"
-              id="Username"
-              required
-              value={admin.Username}
-              onChange={handleInputChange}
-              name="Username"
-            />
-          </div>
 
-          <div className="form-group">
-            <label htmlFor="Password">Password</label>
-            <input
-              type="text"
-              className="form-control"
-              id="Password"
-              required
-              value={admin.Password}
-              onChange={handleInputChange}
-              name="Password"
-            />
+    <div>
+      <AdminHeader />
+      <div className="submit-form">
+        {error && <div className="alert alert-danger">{error}</div>}
+        {submitted ? (
+          <div>
+            <h4>You submitted successfully!</h4>
+            <button className="btn btn-success" onClick={newAdmin}>
+              Add
+            </button>
           </div>
+        ) : (
+          <div>
+            <div className="form-group">
+              <label htmlFor="Username">Username</label>
+              <input
+                type="text"
+                className="form-control"
+                id="Username"
+                required
+                value={admin.Username}
+                onChange={handleInputChange}
+                name="Username"
+              />
+            </div>
 
-          <div className="form-group">
-            <label htmlFor="filename">Filename</label>
-            <input
-              type="file"
-              className="form-control"
-              id="filename"
-              required
-              onChange={handleFileChange}
-              name="filename"
-              multiple
-            />
+            <div className="form-group">
+              <label htmlFor="Password">Password</label>
+              <input
+                type="text"
+                className="form-control"
+                id="Password"
+                required
+                value={admin.Password}
+                onChange={handleInputChange}
+                name="Password"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="filename">Filename</label>
+              <input
+                type="file"
+                className="form-control"
+                id="filename"
+                required
+                onChange={handleFileChange}
+                name="filename"
+                multiple
+              />
+            </div>
+
+            <button onClick={saveAdmin} className="btn btn-success">
+              Submit
+            </button>
           </div>
-
-          <button onClick={saveAdmin} className="btn btn-success">
-            Submit
-          </button>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };
