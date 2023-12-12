@@ -1,48 +1,29 @@
 import axios from 'axios';
 
-class UserService {
-  AUTH_SERVER_ADDRESS = 'http://localhost:3000';
+const API_URL = 'http://localhost:3000';
+const SIGNIN_URL = `${API_URL}/admins/signin`;
 
-  constructor() {}
-
-  getOptions(token) {
-    const bearerAccess = 'Bearer ' + token;
-
-    const options = {
-      headers: {
-        Authorization: bearerAccess,
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      // withCredentials: true
-    };
-
-    return options;
-  }
-
-  async getUsers(token) {
-    const myOptions = this.getOptions(token);
-    console.log(myOptions);
-
+const AuthService = {
+  signIn: async (username, password) => {
     try {
-      const response = await axios.get(`${this.AUTH_SERVER_ADDRESS}/api/users`, myOptions);
-      console.log(response.data);
+      const response = await axios.post(SIGNIN_URL, { Username: username, Password: password });
+      const token = response.data.access_token;
+
+      localStorage.setItem('authToken', token);
+
       return response.data;
     } catch (error) {
-      console.error('Error fetching users:', error);
       throw error;
     }
+  },
+  getAuthToken: () => {
+    return localStorage.getItem('authToken');
+  },
+  isAuthenticated: () => {
+    const authToken = localStorage.getItem('authToken');
+    return authToken !== null;
+  },
+  
+};
 
-    // Alternatively, you can use the following code if you want to use promises:
-    // return axios.get(`${this.AUTH_SERVER_ADDRESS}/api/users`, myOptions)
-    //   .then(response => {
-    //     console.log(response.data);
-    //     return response.data;
-    //   })
-    //   .catch(error => {
-    //     console.error('Error fetching users:', error);
-    //     throw error;
-    //   });
-  }
-}
-
-export default UserService;
+export default AuthService;

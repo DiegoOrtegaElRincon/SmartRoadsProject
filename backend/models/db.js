@@ -47,20 +47,20 @@ sequelize.sync({ force: true }).then(async () => {
 
     console.log('Database and models synchronized successfully.');
 
-    const existingAdmin = await db.Admin.findOne({ where: { Username: 'prueba' } });
+    const checkAdmin = await db.Admin.findOne({ where: { Username: 'test' } });
 
-    if (!existingAdmin) {
-        const hashedPassword = await bcrypt.hash('prueba', 10);
+    if (!checkAdmin) {
+        const cryptedPwd = await bcrypt.hash('1234', 10);
 
-        const createdAdmin = await db.Admin.create({
-            Username: 'prueba',
-            Password: hashedPassword,
+        const testAdmin = await db.Admin.create({
+            Username: 'test',
+            Password: cryptedPwd,
             filename: ''
         });
 
         console.log('Admin predeterminado creado con éxito.');
 
-        console.log('Admin Details:', createdAdmin.toJSON());
+        console.log('Admin Details:', testAdmin.toJSON());
     }
 
 }).catch((err) => {
