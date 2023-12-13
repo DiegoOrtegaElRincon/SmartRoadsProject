@@ -23,7 +23,6 @@ const ActiveElementsList = () => {
         ActiveElementService.getAll()
             .then(response => {
                 setActiveElements(response.data);
-                console.log(response.data);
             })
             .catch(e => {
                 console.log(e);
@@ -44,7 +43,6 @@ const ActiveElementsList = () => {
     const removeAllActiveElements = () => {
         ActiveElementService.removeAll()
             .then(response => {
-                console.log(response.data);
                 refreshList();
             })
             .catch(e => {
@@ -56,7 +54,6 @@ const ActiveElementsList = () => {
         ActiveElementService.findByUsername(searchUsername)
             .then(response => {
                 setActiveElements(response.data);
-                console.log(response.data);
             })
             .catch(e => {
                 console.log(e);
@@ -92,17 +89,20 @@ const ActiveElementsList = () => {
 
                     <ul className="list-group">
                         {activeElements &&
-                            activeElements.map((activeelements, index) => (
-                                <li
-                                    className={
-                                        "list-group-item " + (index === currentIndex ? "active" : "")
-                                    }
-                                    onClick={() => setActiveActiveElement(activeelements, index)}
-                                    key={index}
-                                >
-                                    {activeelements.UID}
-                                </li>
-                            ))}
+                            activeElements.map((activeelements, index) => 
+                                (
+                                    <li
+                                        className={
+                                            "list-group-item " + (index === currentIndex ? "active" : "")
+                                        }
+                                        onClick={() => setActiveActiveElement(activeelements, index)}
+                                        key={index}
+                                    >
+                                        {activeelements.UID}
+                                    </li>
+                                )
+                            )
+                        }
                     </ul>
 
                     <button
@@ -136,7 +136,7 @@ const ActiveElementsList = () => {
                             </div>
 
                             <Link
-                                to={"/activeelements/" + currentActiveElement.Id}
+                                to={"/activeelements/" + currentActiveElement.UID}
                                 className="badge badge-warning"
                             >
                                 Edit

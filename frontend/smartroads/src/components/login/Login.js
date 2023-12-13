@@ -10,9 +10,7 @@ const LoginForm = () => {
     try {
       const response = await AuthService.signIn(username, password);
 
-      console.log('Respuesta del backend:', response);
-
-      localStorage.setItem('adminInfo', JSON.stringify(response.admin));
+      localStorage.setItem('userInfo', JSON.stringify(response));
 
       window.location.href = '/activeelements';
     } catch (error) {

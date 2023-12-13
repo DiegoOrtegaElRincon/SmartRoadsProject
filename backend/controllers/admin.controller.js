@@ -14,11 +14,12 @@ exports.create = (req, res) => {
             message: "Content cannot be empty!"
         });
     }
+
     // Create a Admin
     const admin = {
         Username: req.body.username,
         Password: req.body.password,
-        filename: req.file ? req.file.filename : "",
+        filename: req.file ? req.file.filename : "placeholder-img.jpg",
         isAdmin: req.body.isAdmin ? req.body.isAdmin : false
     }
 
@@ -120,7 +121,7 @@ exports.update = async (req, res) => {
 
     try {
 
-        if (IsThere.filename && IsThere.filename != "") {
+        if (IsThere.filename && IsThere.filename != "" && (IsThere.filename != 'placeholder-image.jpg')) {
             const directoryPath = path.join(__dirname, '../public/images', IsThere.filename);
             fs.unlinkSync(directoryPath);
         }
@@ -147,17 +148,14 @@ exports.update = async (req, res) => {
 exports.updateNoImage = async (req, res) => {
     const id = req.params.id
     let uwu = await Admin.findByPk(id)
+
+    const Pwd = req.body.Password;
+    const cryptedPwd = await bcrypt.hash(Pwd, 10);
     let admin = {
-        Username: req.body.username,
-        Password: req.body.password,
+        Username: req.body.Username,
+        Password: cryptedPwd,
         filename: ""
     };
-
-    console.log(admin)
-
-    if (req.body.Password) {
-        admin.Password = bcrypt.hashSync(req.body.password);
-    }
 
     try {
         const num = await Admin.update(admin, {
@@ -165,18 +163,18 @@ exports.updateNoImage = async (req, res) => {
         });
 
         if (num == 1) {
-            console.log(uwu.get({ plain: true }))
             uwu = uwu.get({ plain: true })
             const directoryPath = path.join(__dirname, '../public/images', uwu.filename);
             if (fs.existsSync(directoryPath)) {
-                fs.unlink(directoryPath, (err) => {
-                    if (err) {
-                        console.error("Error deleting image file: ", err);
-                    } else {
-                        console.log("Image file deleted: ", directoryPath);
-                    }
-                });
-                console.log("Image file deleted: ", directoryPath)
+                if (uwu.filename != '' && (uwu.filename != 'placeholder-image.jpg')) {
+                    fs.unlink(directoryPath, (err) => {
+                        if (err) {
+                            console.error("Error deleting image file: ", err);
+                        } else {
+                            console.log("Image file deleted: ", directoryPath);
+                        }
+                    })
+                };
             } else {
                 console.error('File does not exist: ', directoryPath);
             }
@@ -209,7 +207,7 @@ exports.delete = async (req, res) => {
         }
 
         try {
-            if (AdminExists.filename) {
+            if (AdminExists.filename && (AdminExists.filename != 'placeholder-image.jpg')) {
                 const directoryPath = path.join(__dirname, '../public/images', AdminExists.filename);
                 if (fs.existsSync(directoryPath)) {
                     fs.unlink(directoryPath, (err) => {
@@ -246,7 +244,7 @@ exports.deleteAll = (req, res) => {
             const imageFileNames = [];
 
             admins.forEach(admin => {
-                if (admin.filename) {
+                if (admin.filename && (admin.filename != 'placeholder-image.jpg')) {
                     imageFileNames.push(admin.filename);
                 }
             });
@@ -260,9 +258,12 @@ exports.deleteAll = (req, res) => {
                 });
             });
 
+            const admin1 = Admin.findOne({
+                order: [ [ 'Id', 'ASC' ]],
+            })
 
             Admin.destroy({
-                where: {},
+                where: { [Op.ne]: admin1.Id },
                 truncate: false
             })
                 .then(nums => {
@@ -291,18 +292,5 @@ exports.findUserByUsernameAndPassword = (req, res) => {
                 message:
                     err.message || "Some error occurred while retrieving admins."
             });
-        });
-};
-
-
-exports.getLoggedInAdmin = (req, res) => {
-    const adminId = req.admin.UID;
-
-    Admin.findByPk(adminId)
-        .then(admin => {
-            res.json({ admin });
-        })
-        .catch(error => {
-            res.status(500).json({ message: 'Error al obtener información del admin logeado.' });
         });
 };

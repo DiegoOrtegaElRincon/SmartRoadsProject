@@ -1,34 +1,72 @@
 import http from "../http-common";
+import AuthService from "./authService";
+
+
 
 const getAll = () => {
-  return http.get("/activeelements");
+  const token = AuthService.getAuthToken()
+  return http.get("/activeelements", {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
 };
 
 const get = id => {
-  return http.get(`/activeelements/${id}`);
+  const token = AuthService.getAuthToken()
+  return http.get(`/activeelements/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
 };
 
 const create = data => {
-  return http.post("/activeelements", data);
+  const token = AuthService.getAuthToken()
+  return http.post("/activeelements", data, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
 };
 
 const update = (id, data) => {
-  return http.put(`/activeelements/${id}`, data);
+  const token = AuthService.getAuthToken()
+  return http.put(`/activeelements/${id}`, data, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
 };
 
 const remove = id => {
-  return http.delete(`/activeelements/${id}`);
+  const token = AuthService.getAuthToken()
+  return http.delete(`/activeelements/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
 };
 
 const removeAll = () => {
-  return http.delete(`/activeelements`);
+  const token = AuthService.getAuthToken()
+  return http.delete(`/activeelements`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
 };
 
 const findByUsername = UID => {
-  return http.get(`/activeelements?uid=${UID}`);
+  const token = AuthService.getAuthToken()
+  return http.get(`/activeelements?uid=${UID}`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
 };
 
-const ActicveElementService = {
+const ActiveElementService = {
   getAll,
   get,
   create,
@@ -38,4 +76,4 @@ const ActicveElementService = {
   findByUsername
 };
 
-export default ActicveElementService;
+export default ActiveElementService;
