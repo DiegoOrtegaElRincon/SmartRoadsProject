@@ -9,18 +9,17 @@ const AuthService = {
       const response = await axios.post(SIGNIN_URL, { Username: username, Password: password });
       const token = response.data.access_token;
 
-      localStorage.setItem('authToken', token);
-
+      localStorage.setItem('access_token', token);
       return response.data;
     } catch (error) {
       throw error;
     }
   },
   getAuthToken: () => {
-    return localStorage.getItem('authToken');
+    return localStorage.getItem('access_token');
   },
   isAuthenticated: () => {
-    const authToken = localStorage.getItem('authToken');
+    const authToken = localStorage.getItem('access_token');
     return authToken !== null;
   },
   

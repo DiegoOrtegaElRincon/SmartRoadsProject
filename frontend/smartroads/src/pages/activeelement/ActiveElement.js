@@ -8,9 +8,10 @@ const ActiveElement = () => {
     let navigate = useNavigate();
 
     const initialActiveElementState = {
-        Type: "",
-        Status: "",
-        Speed: "",
+        UID: null,
+        type: "",
+        status: "",
+        speed: "",
     };
 
     const [currentActiveElement, setCurrentActiveElement] = useState(initialActiveElementState);
@@ -20,7 +21,6 @@ const ActiveElement = () => {
         ActiveElementService.get(id)
             .then(response => {
                 setCurrentActiveElement(response.data);
-                console.log(response.data);
             })
             .catch(e => {
                 console.log(e);
@@ -40,7 +40,7 @@ const ActiveElement = () => {
     const updateActiveElement = () => {
         ActiveElementService.update(currentActiveElement.UID, currentActiveElement)
             .then(response => {
-                console.log(response.data);
+                console.log(response)
                 setMessage("The activeElement was updated successfully!");
             })
             .catch(e => {
@@ -61,43 +61,43 @@ const ActiveElement = () => {
 
     return (
         <div>
-            <AdminHeader/>
+            <AdminHeader />
             <div>
                 {currentActiveElement ? (
                     <div className="edit-form">
                         <h4>ActiveElement</h4>
                         <form>
                             <div className="form-group">
-                                <label htmlFor="Type">Type</label>
+                                <label htmlFor="type">Type</label>
                                 <input
                                     type="text"
                                     className="form-control"
-                                    id="Type"
-                                    name="Type"
-                                    value={currentActiveElement.Type}
+                                    id="type"
+                                    name="type"
+                                    value={currentActiveElement.type}
                                     onChange={handleInputChange}
                                 />
                             </div>
                             <div className="form-group">
-                                <label htmlFor="Status">Status</label>
+                                <label htmlFor="status">Status</label>
                                 <input
                                     type="text"
                                     className="form-control"
-                                    id="Status"
-                                    name="Status"
-                                    value={currentActiveElement.Status}
+                                    id="status"
+                                    name="status"
+                                    value={currentActiveElement.status}
                                     onChange={handleInputChange}
                                 />
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="Speed">Speed</label>
+                                <label htmlFor="speed">Speed</label>
                                 <input
                                     type="text"
                                     className="form-control"
-                                    id="Speed"
-                                    name="Speed"
-                                    value={currentActiveElement.Speed}
+                                    id="speed"
+                                    name="speed"
+                                    value={currentActiveElement.speed}
                                     onChange={handleInputChange}
                                 />
                             </div>

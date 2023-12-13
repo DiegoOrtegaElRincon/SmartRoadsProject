@@ -42,8 +42,8 @@ db.Admin = require('./Admin.js')(sequelize, Sequelize);
 // Sincronizar todos los modelos con la base de datos
 sequelize.sync({ force: true }).then(async () => {
     // Definir relaciones entre modelos después de sincronizar
-    db.Spot.belongsTo(db.ActiveElement, { foreignKey: 'UID' });
-    db.ActiveElement.hasMany(db.Spot, { foreignKey: 'UID' });
+    db.Spot.belongsTo(db.ActiveElement, { foreignKey: 'UID' }, { onDelete: 'cascade' }, { onUpdate: 'cascade' });
+    db.ActiveElement.hasMany(db.Spot, { foreignKey: 'UID' }, { onDelete: 'cascade' }, { onUpdate: 'cascade' });
 
     console.log('Database and models synchronized successfully.');
 
@@ -53,14 +53,13 @@ sequelize.sync({ force: true }).then(async () => {
         const cryptedPwd = await bcrypt.hash('1234', 10);
 
         const testAdmin = await db.Admin.create({
+            Id: 1,
             Username: 'test',
             Password: cryptedPwd,
-            filename: ''
+            filename: 'placeholder-image.jpg'
         });
 
         console.log('Admin predeterminado creado con éxito.');
-
-        console.log('Admin Details:', testAdmin.toJSON());
     }
 
 }).catch((err) => {

@@ -1,12 +1,12 @@
 import React from 'react';
+import Header from '../../components/header/Header';
 import LoginForm from '../../components/login/Login';
-import AdminHeader from '../../components/header/AdminHeader';
 
 const Login = () => {
     return (
         <div>
-            <AdminHeader/>
-            <LoginForm key={'Alert Tracker'}/>
+            <Header title={"Login"}/>
+            <LoginForm/>
         </div>
     );
 };
