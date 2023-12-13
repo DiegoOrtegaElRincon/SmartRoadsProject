@@ -12,6 +12,9 @@ import Main from "./pages/home/Main";
 import Login from "./pages/login/Login";
 import Bicycle from "./pages/bicycles/Bicycles";
 import Car from "./pages/cars/Car";
+import ChangingElementList from "./pages/changingelement/ChangingElementList";
+import AddChangingElement from "./pages/changingelement/AddChangingElement";
+import ChangingElement from "./pages/changingelement/ChangingElement";
 
 function App() {
   return (
@@ -28,6 +31,9 @@ function App() {
           <Route path="/activeelements" element={<ActiveElementsList />} />
           <Route path="/add-activeelements" element={<AddActiveElement />} />
           <Route path="/activeelements/:id" element={<ActiveElement />} />
+          <Route path="/changingelements" element={<ChangingElementList />} />
+          <Route path="/add-changingelements" element={<AddChangingElement />} />
+          <Route path="/changingelements/:id" element={<ChangingElement />} />
         </Routes>
       {/* </BrowserRouter> */}
     </div>

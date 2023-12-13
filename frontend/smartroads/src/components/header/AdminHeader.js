@@ -19,6 +19,16 @@ const AdminHeader = () => {
                             Active Element
                         </Link>
                     </li>
+                    <li className="nav-item">
+                        <Link to={"/changingelements"} className="nav-link">
+                            Changing Element
+                        </Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link to={"/passiveelements"} className="nav-link">
+                            Passive Element
+                        </Link>
+                    </li>
                 </div>
             </nav>
         </div>
