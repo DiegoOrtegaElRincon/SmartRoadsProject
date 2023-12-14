@@ -9,6 +9,8 @@ const AuthService = {
       const response = await axios.post(SIGNIN_URL, { Username: username, Password: password });
       const token = response.data.access_token;
 
+      console.log(token)
+
       localStorage.setItem('access_token', token);
       return response.data;
     } catch (error) {
