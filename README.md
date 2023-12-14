@@ -56,4 +56,14 @@ Flujos de Datos: Cómo se mueven los datos dentro del sistema.
 
 Integraciones: Conexiones con otros sistemas o servicios.
 
+6.
+
+    ActiveElement (UID, Type, Speed, Status)
+    ChangingElement (UID, Type, Status, Location)
+    PassiveElement (UID, Type, Location)
+    Spot (ActiveElement_UID*, Location)
+    Info (IDUID*, Information)
+    Administrator (ID, Password, Username)
+
+
 
