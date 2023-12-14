@@ -75,12 +75,12 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
   const id = req.params.id;
 
-  // if (!req.body.type || !req.body.status || !req.body.location) {
-  //   res.status(400).send({
-  //     message: "Content cannot be empty!"
-  //   });
-  //   return;
-  // }
+  if (!req.body.type || !req.body.status || !req.body.location.coordinates) {
+    res.status(400).send({
+      message: "Content cannot be empty!"
+    });
+    return;
+  }
   // Create a ChangingElement
 
   console.log(req.body)
@@ -92,6 +92,8 @@ exports.update = (req, res) => {
       coordinates: [req.body.location.coordinates[0], req.body.location.coordinates[1]]
     }
   };
+
+  console.log(changingElement)
 
   ChangingElement.update(changingElement, {
     where: { UID: id }

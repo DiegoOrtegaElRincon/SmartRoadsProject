@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from 'react-router-dom';
-import ChangingElementService from "../../services/ChangingElementService"; // Update with the actual service
+import ChangingElementService from "../../services/ChangingElementService";
 import AdminHeader from "../../components/header/AdminHeader";
 
 const ChangingElement = () => {
@@ -9,15 +9,25 @@ const ChangingElement = () => {
 
     const initialChangingElementState = {
         UID: null,
-        Type: "",
-        Status: "",
+        type: "",
+        status: "",
         Location: {
             type: "Point",
-            coordinates: [0, 0], // Initial coordinates; you may adjust this based on your needs
+            coordinates: [0, 0],
         },
-        // Add other fields based on your ChangingElement model
     };
 
+    const initialChangingElementState1 = {
+        UID: null,
+        type: "",
+        status: "",
+        location: {
+            type: "Point",
+            coordinates: [0, 0],
+        },
+    };
+
+    const [changingElement, setChangingElement] = useState(initialChangingElementState1);
     const [currentChangingElement, setCurrentChangingElement] = useState(initialChangingElementState);
     const [message, setMessage] = useState("");
 
@@ -25,6 +35,15 @@ const ChangingElement = () => {
         ChangingElementService.get(id)
             .then(response => {
                 setCurrentChangingElement(response.data);
+                setChangingElement({
+                    type: response.data.Type,
+                    status: response.data.Status,
+                    location: {
+                        coordinates: [response.data.Location.coordinates[0],response.data.Location.coordinates[1]]
+                    }
+                    // Set other fields based on the response and your ChangingElement model
+                });
+                console.log(response.data.Location)
             })
             .catch(e => {
                 console.log(e);
@@ -38,11 +57,15 @@ const ChangingElement = () => {
 
     const handleInputChange = event => {
         const { name, value } = event.target;
-        setCurrentChangingElement({ ...currentChangingElement, [name]: value });
+        setCurrentChangingElement((prevChangingElement) => ({
+            ...prevChangingElement,
+            [name]: value,
+        }));
     };
 
     const updateChangingElement = () => {
-        ChangingElementService.update(currentChangingElement.UID, currentChangingElement)
+
+        ChangingElementService.update(currentChangingElement.UID, changingElement)
             .then(response => {
                 console.log(response);
                 setMessage("The changingElement was updated successfully!");
@@ -93,14 +116,14 @@ const ChangingElement = () => {
                                     onChange={handleInputChange}
                                 />
                             </div>
-                             <div className="form-group">
+                            <div className="form-group">
                                 <label htmlFor="Latitude">Latitude</label>
                                 <input
                                     type="text"
                                     className="form-control"
-                                    id="Latitude"
-                                    name="Location.latitude"
-                                    value={currentChangingElement.Location.coordinates[1]}
+                                    id="latitude"
+                                    name="latitude"
+                                    placeholder={currentChangingElement.Location.coordinates[1]}
                                     onChange={handleInputChange}
                                 />
                             </div>
@@ -109,9 +132,9 @@ const ChangingElement = () => {
                                 <input
                                     type="text"
                                     className="form-control"
-                                    id="Longitude"
-                                    name="Location.longitude"
-                                    value={currentChangingElement.Location.coordinates[0]}
+                                    id="longitude"
+                                    name="longitude"
+                                    placeholder={currentChangingElement.Location.coordinates[0]}
                                     onChange={handleInputChange}
                                 />
                             </div>
