@@ -5,9 +5,9 @@ import AdminHeader from "../../components/header/AdminHeader";
 const AddChangingElement = () => {
 
     const initialChangingElementState = {
-        Type: "",
-        Status: "",
-        Location: {
+        type: "",
+        status: "",
+        location: {
             type: "Point",
             coordinates: [0, 0], // Initial coordinates; you may adjust this based on your needs
         }
@@ -18,23 +18,43 @@ const AddChangingElement = () => {
     const [submitted, setSubmitted] = useState(false);
     const [error, setError] = useState(null);
 
+
     const handleInputChange = (event) => {
         const { name, value } = event.target;
-        setChangingElement({ ...changingElement, [name]: value });
+    
+        if (name === "latitude" || name === "longitude") {
+            setChangingElement({
+                ...changingElement,
+                location: {
+                    ...changingElement.location,
+                    coordinates: name === "latitude" 
+                        ? [parseFloat(value), changingElement.location.coordinates[1]] 
+                        : [changingElement.location.coordinates[0], parseFloat(value)]
+                }
+            });
+        } else {
+            // Si no es una coordenada, actualiza normalmente
+            setChangingElement({
+                ...changingElement,
+                [name]: value
+            });
+        }
     };
+    
 
     const saveChangingElement = () => {
         ChangingElementService.create(changingElement)
             .then((response) => {
                 setChangingElement({
-                    Type: response.data.Type,
-                    Status: response.data.Status,
-                    Location: response.data.Location
+                    type: response.data.Type,
+                    status: response.data.Status,
+                    location: {
+                        coordinates: [response.data.latitude,response.data.longitude]
+                    }
                     // Set other fields based on the response and your ChangingElement model
                 });
                 setSubmitted(true);
                 setError(null);
-                console.log(response.data);
             })
             .catch((error) => {
                 console.log(error.response.data);
@@ -64,13 +84,13 @@ const AddChangingElement = () => {
                     <div>
                         <form>
                             <div className="form-group">
-                                <label htmlFor="Type">Type</label>
+                                <label htmlFor="type">Type</label>
                                 <input
                                     type="text"
                                     className="form-control"
-                                    id="Type"
-                                    name="Type"
-                                    value={"Eg: Car"}
+                                    id="type"
+                                    name="type"
+                                    placeholder={"Car"}
                                     onChange={handleInputChange}
                                 />
                             </div>
@@ -79,9 +99,9 @@ const AddChangingElement = () => {
                                 <input
                                     type="text"
                                     className="form-control"
-                                    id="Status"
-                                    name="Status"
-                                    value={"Eg: 1"}
+                                    id="status"
+                                    name="status"
+                                    placeholder={"1"}
                                     onChange={handleInputChange}
                                 />
                             </div>
@@ -90,9 +110,9 @@ const AddChangingElement = () => {
                                 <input
                                     type="text"
                                     className="form-control"
-                                    id="Latitude"
-                                    name="Location.latitude"
-                                    value={"Eg: -34.984398273"}
+                                    id="latitude"
+                                    name="latitude"
+                                    placeholder={"-34.984398273"}
                                     onChange={handleInputChange}
                                 />
                             </div>
@@ -102,8 +122,8 @@ const AddChangingElement = () => {
                                     type="text"
                                     className="form-control"
                                     id="Longitude"
-                                    name="Location.longitude"
-                                    value={"Eg: 72.684657852"}
+                                    name="longitude"
+                                    placeholder={"72.684657852"}
                                     onChange={handleInputChange}
                                 />
                             </div>

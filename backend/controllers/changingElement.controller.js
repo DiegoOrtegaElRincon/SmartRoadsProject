@@ -5,30 +5,41 @@ const Op = db.Sequelize.Op;
 // Create and Save a new ChangingElement
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.type || !req.body.status || !req.body.location) {
+  if (!req.body.type || !req.body.status || !req.body.location || !req.body.location.coordinates) {
     res.status(400).send({
       message: "Content cannot be empty!"
     });
     return;
   }
-  // Create a ChangingElement
-  const changingElement = {
-    Type: req.body.type,
-    Status: req.body.status,
-    Location: {
-      type: 'Point',
-      coordinates: JSON.parse(req.body.location)
-    }
-  }
-  // Save ChangingElement in the database
-  ChangingElement.create(changingElement).then(data => {
-    res.send(data);
-  }).catch(err => {
+
+  try {
+    // Create a ChangingElement
+    const changingElement = {
+      Type: req.body.type,
+      Status: req.body.status,
+      Location: {
+        type: 'Point',
+        coordinates: [req.body.location.coordinates[0], req.body.location.coordinates[1]]
+      }
+    };
+
+    // Save ChangingElement in the database
+    ChangingElement.create(changingElement).then(data => {
+      res.send(data);
+    }).catch(err => {
+      console.error(err);  // Log the error for debugging purposes
+      res.status(500).send({
+        message: err.message || "Some error occurred while creating the changingElement"
+      });
+    });
+  } catch (error) {
+    console.error(error);
     res.status(500).send({
-      message: err.message || "Some error occurred while creating the changingElement"
-    })
-  });
+      message: error.message || "An unexpected error occurred"
+    });
+  }
 };
+
 
 // Retrieve all ChangingElement from the database.
 exports.findAll = (req, res) => {
@@ -64,21 +75,23 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
   const id = req.params.id;
 
-  if (!req.body.type || !req.body.status || !req.body.location) {
-    res.status(400).send({
-      message: "Content cannot be empty!"
-    });
-    return;
-  }
+  // if (!req.body.type || !req.body.status || !req.body.location) {
+  //   res.status(400).send({
+  //     message: "Content cannot be empty!"
+  //   });
+  //   return;
+  // }
   // Create a ChangingElement
+
+  console.log(req.body)
   const changingElement = {
     Type: req.body.type,
     Status: req.body.status,
     Location: {
       type: 'Point',
-      coordinates: JSON.parse(req.body.location)
+      coordinates: [req.body.location.coordinates[0], req.body.location.coordinates[1]]
     }
-  }
+  };
 
   ChangingElement.update(changingElement, {
     where: { UID: id }

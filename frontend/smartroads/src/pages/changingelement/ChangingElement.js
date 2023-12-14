@@ -1,144 +1,146 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from 'react-router-dom';
-import ChangingElementService from "../../services/ChangingElementService"; // Update with the actual service
+import { useParams } from "react-router-dom";
+import ChangingElementService from "../../services/ChangingElementService";
 import AdminHeader from "../../components/header/AdminHeader";
 
 const ChangingElement = () => {
-    const { id } = useParams();
-    let navigate = useNavigate();
+  const { id } = useParams();
 
-    const initialChangingElementState = {
-        UID: null,
-        Type: "",
-        Status: "",
-        Location: {
-            type: "Point",
-            coordinates: [0, 0], // Initial coordinates; you may adjust this based on your needs
+  const initialChangingElementState = {
+    type: "",
+    status: "",
+    location: {
+      type: "Point",
+      coordinates: [0, 0],
+    },
+  };
+
+  const [changingElement, setChangingElement] = useState(
+    initialChangingElementState
+  );
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const getChangingElement = async () => {
+      try {
+        const response = await ChangingElementService.get(id);
+        setChangingElement(response.data);
+      } catch (error) {
+        console.log(error.response.data);
+        setError(error.response.data.message);
+      }
+    };
+
+    getChangingElement();
+  }, [id]);
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+
+    if (name === "latitude" || name === "longitude") {
+      setChangingElement({
+        ...changingElement,
+        location: {
+          ...changingElement.location,
+          coordinates: name === "latitude" ? [parseFloat(value), changingElement.location.coordinates[1]] : [changingElement.location.coordinates[0], parseFloat(value)],
         },
-        // Add other fields based on your ChangingElement model
-    };
+      });
+    } else {
+      setChangingElement({
+        ...changingElement,
+        [name]: value,
+      });
+    }
+  };
 
-    const [currentChangingElement, setCurrentChangingElement] = useState(initialChangingElementState);
-    const [message, setMessage] = useState("");
+  const updateChangingElement = () => {
+    ChangingElementService.update(id, changingElement)
+      .then((response) => {
+        console.log(response.data);
+        setSubmitted(true);
+        setError(null);
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+        setError(error.response.data.message);
+      });
+  };
 
-    const getChangingElement = id => {
-        ChangingElementService.get(id)
-            .then(response => {
-                setCurrentChangingElement(response.data);
-            })
-            .catch(e => {
-                console.log(e);
-            });
-    };
+  const newChangingElement = () => {
+    setChangingElement(initialChangingElementState);
+    setSubmitted(false);
+    setError(null);
+  };
 
-    useEffect(() => {
-        if (id)
-            getChangingElement(id);
-    }, [id]);
-
-    const handleInputChange = event => {
-        const { name, value } = event.target;
-        setCurrentChangingElement({ ...currentChangingElement, [name]: value });
-    };
-
-    const updateChangingElement = () => {
-        ChangingElementService.update(currentChangingElement.UID, currentChangingElement)
-            .then(response => {
-                console.log(response);
-                setMessage("The changingElement was updated successfully!");
-            })
-            .catch(e => {
-                console.log(e);
-            });
-    };
-
-    const deleteChangingElement = () => {
-        ChangingElementService.remove(currentChangingElement.UID)
-            .then(response => {
-                console.log(response.data);
-                navigate("/changingelements");
-            })
-            .catch(e => {
-                console.log(e);
-            });
-    };
-
-    return (
-        <div>
-            <AdminHeader />
-            <div>
-                {currentChangingElement ? (
-                    <div className="edit-form">
-                        <h4>ChangingElement</h4>
-                        <form>
-                            <div className="form-group">
-                                <label htmlFor="Type">Type</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="Type"
-                                    name="Type"
-                                    value={currentChangingElement.Type}
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="Status">Status</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="Status"
-                                    name="Status"
-                                    value={currentChangingElement.Status}
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-                             <div className="form-group">
-                                <label htmlFor="Latitude">Latitude</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="Latitude"
-                                    name="Location.latitude"
-                                    value={currentChangingElement.Location.coordinates[1]}
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="Longitude">Longitude</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="Longitude"
-                                    name="Location.longitude"
-                                    value={currentChangingElement.Location.coordinates[0]}
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-                        </form>
-
-                        <button className="badge badge-danger mr-2" type="button" onClick={deleteChangingElement}>
-                            Delete
-                        </button>
-
-                        <button
-                            type="submit"
-                            className="badge badge-success"
-                            onClick={updateChangingElement}
-                        >
-                            Update
-                        </button>
-                        <p>{message}</p>
-                    </div>
-                ) : (
-                    <div>
-                        <br />
-                        <p>Please click on a ChangingElement...</p>
-                    </div>
-                )}
-            </div>
-        </div>
-    );
+  return (
+    <div>
+      <AdminHeader />
+      <div className="submit-form">
+        {error && <div className="alert alert-danger">{error}</div>}
+        {submitted ? (
+          <div>
+            <h4>You submitted the update successfully!</h4>
+            <button className="btn btn-success" onClick={newChangingElement}>
+              Add Another
+            </button>
+          </div>
+        ) : (
+          <div>
+            <form>
+              <div className="form-group">
+                <label htmlFor="type">Type</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="type"
+                  name="type"
+                  value={changingElement.type}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="status">Status</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="status"
+                  name="status"
+                  value={changingElement.status}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="latitude">Latitude</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="latitude"
+                  name="latitude"
+                  value={changingElement.location.coordinates[0]}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="longitude">Longitude</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="longitude"
+                  name="longitude"
+                  value={changingElement.location.coordinates[1]}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </form>
+            <button onClick={updateChangingElement} className="btn btn-success">
+              Update
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default ChangingElement;
