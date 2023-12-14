@@ -55,12 +55,28 @@ const ChangingElement = () => {
             getChangingElement(id);
     }, [id]);
 
-    const handleInputChange = event => {
+    const handleInputChange = (event) => {
         const { name, value } = event.target;
-        setCurrentChangingElement((prevChangingElement) => ({
-            ...prevChangingElement,
-            [name]: value,
-        }));
+    
+        if (name === "latitude" || name === "longitude") {
+            setChangingElement({
+                ...changingElement,
+                location: {
+                    ...changingElement.location,
+                    coordinates: name === "latitude" 
+                        ? [parseFloat(value), changingElement.location.coordinates[1]] 
+                        : [changingElement.location.coordinates[0], parseFloat(value)]
+                }
+            });
+        } else {
+            // Si no es una coordenada, actualiza normalmente
+            setChangingElement({
+                ...changingElement,
+                [name]: value
+            });
+        }
+
+        console.log(changingElement)
     };
 
     const updateChangingElement = () => {
@@ -90,7 +106,7 @@ const ChangingElement = () => {
         <div>
             <AdminHeader />
             <div>
-                {currentChangingElement ? (
+                {changingElement ? (
                     <div className="edit-form">
                         <h4>ChangingElement</h4>
                         <form>
@@ -100,8 +116,8 @@ const ChangingElement = () => {
                                     type="text"
                                     className="form-control"
                                     id="Type"
-                                    name="Type"
-                                    value={currentChangingElement.Type}
+                                    name="type"
+                                    value={changingElement.type}
                                     onChange={handleInputChange}
                                 />
                             </div>
@@ -111,8 +127,8 @@ const ChangingElement = () => {
                                     type="text"
                                     className="form-control"
                                     id="Status"
-                                    name="Status"
-                                    value={currentChangingElement.Status}
+                                    name="status"
+                                    value={changingElement.status}
                                     onChange={handleInputChange}
                                 />
                             </div>
@@ -123,7 +139,7 @@ const ChangingElement = () => {
                                     className="form-control"
                                     id="latitude"
                                     name="latitude"
-                                    placeholder={currentChangingElement.Location.coordinates[1]}
+                                    placeholder={changingElement.location.coordinates[0]}
                                     onChange={handleInputChange}
                                 />
                             </div>
@@ -134,7 +150,7 @@ const ChangingElement = () => {
                                     className="form-control"
                                     id="longitude"
                                     name="longitude"
-                                    placeholder={currentChangingElement.Location.coordinates[0]}
+                                    placeholder={changingElement.location.coordinates[1]}
                                     onChange={handleInputChange}
                                 />
                             </div>
