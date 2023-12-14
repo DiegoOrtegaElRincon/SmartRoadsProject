@@ -9,29 +9,41 @@ El proyecto SmartRoad, en colaboración con el Instituto Tecnológico de Canaria
 [SmartRoads Relational.pdf](https://github.com/DiegoOrtegaElRincon/SmartRoadsProject/files/13675454/SmartRoads.Relational.pdf)
 
 El diagrama relacional de SmartRoads muestra las entidades clave y sus relaciones. Incluye:
+
 ActiveElement: Entidades activas en la carretera (señales, semáforos) con atributos como UID, tipo, velocidad y estado.
+
 ChangingElement: Elementos que pueden cambiar de estado, como señales dinámicas, con UID, tipo, estado y ubicación.
+
 PassiveElement: Elementos pasivos (por ejemplo, señales estáticas) identificados por UID, tipo y ubicación.
+
 Spot: Ubicaciones específicas en la carretera vinculadas a elementos activos.
+
 Info: Información asociada a elementos, con IDUID e información detallada.
+
 Administrator: Datos de los administradores del sistema, incluyendo ID, contraseña y nombre de usuario.
+
 
 Este modelo establece la estructura de datos para la gestión y el seguimiento de los elementos de la carretera en el proyecto SmartRoads.
 
 [SmartRoads UML.pdf](https://github.com/DiegoOrtegaElRincon/SmartRoadsProject/files/13675456/SmartRoads.UML.pdf)
 
 
-3.- Requisitos de Usuario
+3. Requisitos de Usuario
 
 Descripción General: Resumen de las necesidades de los usuarios.
+
 Requisitos Funcionales: Lista de todas las funcionalidades requeridas.
+
 Requisitos No Funcionales: Aspectos como seguridad, rendimiento y usabilidad.
 
-4.- Casos de uso
+
+4. Casos de uso
 [SmartRoads Case-Use.pdf](https://github.com/DiegoOrtegaElRincon/SmartRoadsProject/files/13675424/SmartRoads.Case-Use.pdf)
 
 Ciclista: Su función es enviar su ubicación al sistema.
+
 Conductor: Puede recibir notificaciones del sistema.
+
 Administrador: Se encarga de gestionar los datos dentro del sistema.
 
 5. Funcionamiento y Especificaciones Técnicas
