@@ -74,7 +74,6 @@ app.use(function (req, res, next) {
         const credentials = Buffer.from(base64Credentials, 'base64').toString('ascii');
         const [username, password] = credentials.split(':');
 
-        console.log('Decoded Credentials:', username, password);
 
         req.body.Username = username;
         req.body.Password = password;

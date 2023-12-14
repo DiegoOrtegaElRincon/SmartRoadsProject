@@ -19,11 +19,11 @@ exports.create = (req, res) => {
   console.log(req.body.type)
   // Save ActiveElement in the database
   ActiveElement.create(activeElement).then(data => {
-    res.send(data);
+    res.status(201).send(data);  // Asegúrate de devolver el código de estado 201
   }).catch(err => {
     res.status(500).send({
       message: err.message || "Some error occurred while creating the activeElement"
-    })
+    });
   });
 };
 
@@ -73,7 +73,6 @@ exports.update = (req, res) => {
     Speed: req.body.speed
   }
 
-  console.log(activeElement)
   ActiveElement.update(activeElement, {
     where: { UID: id }
   }).then(num => {
