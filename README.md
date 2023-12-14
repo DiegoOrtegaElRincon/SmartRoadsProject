@@ -66,12 +66,17 @@ Integraciones: Conexiones con otros sistemas o servicios.
 
 6.
 
-    ActiveElement (UID, Type, Speed, Status)
-    ChangingElement (UID, Type, Status, Location)
-    PassiveElement (UID, Type, Location)
-    Spot (ActiveElement_UID*, Location)
-    Info (IDUID*, Information)
-    Administrator (ID, Password, Username)
+ActiveElement (UID, Type, Speed, Status)
+ChangingElement (UID, Type, Status, Location)
+PassiveElement (UID, Type, Location)
+Spot (ActiveElement_UID*, Location)
+Info (IDUID*, Information)
+Administrator (ID, Password, Username)
 
+9. Pila Tecnologica
+NodeJS: Utilizado como entorno de ejecución para JavaScript en el servidor. Es elegido por su eficiencia y escalabilidad, especialmente en aplicaciones en tiempo real.
+ExpressJS: Un framework minimalista y flexible para NodeJS, utilizado para construir aplicaciones web y API. Su simplicidad y capacidad de integración con otras tecnologías lo hacen ideal para este proyecto.
+Sequelize: Es un ORM (Object-Relational Mapping) para Node.js, que soporta la gestión de bases de datos SQL. Facilita las operaciones de base de datos y permite escribir código de base de datos en JavaScript.
+React: Una biblioteca de JavaScript para construir interfaces de usuario. Se utiliza para el frontend debido a su eficiencia y capacidad de crear aplicaciones web dinámicas y de alto rendimiento.
 
 
