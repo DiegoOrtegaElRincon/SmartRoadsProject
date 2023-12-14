@@ -6,6 +6,14 @@ El proyecto SmartRoad, en colaboración con el Instituto Tecnológico de Canaria
 
 [SmartRoads E-R.pdf](https://github.com/DiegoOrtegaElRincon/SmartRoadsProject/files/13675437/SmartRoads.E-R.pdf)
 
+Entidades Principales: El diagrama muestra entidades principales como ActiveElement, ChangingElement, PassiveElement, y Spot. Cada una con atributos específicos como UID, Type, y Location.
+
+Relaciones: Existe una relación significativa entre ActiveElement, ChangingElement, y Spot. Por ejemplo, un ActiveElement puede tener varios Spot, indicando múltiples ubicaciones o eventos asociados con un elemento activo.
+
+Atributos: Atributos como UID (Identificador Único), Type (Tipo de elemento), y Status (Estado del elemento) son fundamentales para la identificación y gestión de datos en el sistema.
+
+Administración: La entidad Administrator sugiere un sistema de gestión de usuarios con atributos como ID, Password y Username, esencial para la seguridad y administración del sistema.
+
 [SmartRoads Relational.pdf](https://github.com/DiegoOrtegaElRincon/SmartRoadsProject/files/13675454/SmartRoads.Relational.pdf)
 
 El diagrama relacional de SmartRoads muestra las entidades clave y sus relaciones. Incluye:
