@@ -1,20 +1,18 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom'; // Importa el hook useHistory
 import { PiArrowBendDownLeftThin } from 'react-icons/pi';
+import './Footer.css'; // Make sure to import the CSS file
 
 const Footer = () => {
-    const history = useHistory();
-
     const handleGoHome = () => {
-        history.push('/'); // Cambia la ruta según tu configuración de rutas
+        window.location.href = '/';
     };
 
     return (
-        <footer className="navbar fixed-bottom navbar-light bg-light">
-            <div className="container">
+        <footer className="custom-footer">
+            <div className="footer-container">
                 <button
                     type="button"
-                    className="btn btn-link"
+                    className="home-button"
                     onClick={handleGoHome}
                 >
                     <PiArrowBendDownLeftThin size={30} />

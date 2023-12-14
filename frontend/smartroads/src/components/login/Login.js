@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import AuthService from '../../services/authService';
+import Footer from '../footer/Footer';
+import './Login.css'
 
 const LoginForm = () => {
   const [username, setUsername] = useState('');
@@ -22,39 +24,34 @@ const LoginForm = () => {
   return (
     <div className="submit-form">
       {error && <div className="alert alert-danger">{error}</div>}
-      <div>
-        <h1 className="mb-4">Inicio de Sesión</h1>
-        <form>
-          <div className="form-group">
-            <label htmlFor="username">Username:</label>
-            <input
-              type="text"
-              className="form-control"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Password:</label>
-            <input
-              type="password"
-              className="form-control"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          {error && <p className="text-danger">{error}</p>}
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={handleLogin}
-          >
-            Iniciar Sesión
-          </button>
-        </form>
-      </div>
+      <h1 className="mb-4">Inicio de Sesión</h1>
+      <form>
+        <div className="form-group">
+          <input
+            type="text"
+            className="form-control"
+            id="username"
+            placeholder="Introduce email"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <input
+            type="password"
+            className="form-control"
+            id="password"
+            placeholder="Introduce password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <button
+          className="button button1"
+          onClick={handleLogin}
+        >Login</button>
+      </form>
+      <Footer />
     </div>
   );
 };

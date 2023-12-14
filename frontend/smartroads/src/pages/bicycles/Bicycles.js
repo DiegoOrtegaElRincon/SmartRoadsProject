@@ -2,33 +2,30 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../../components/header/Header';
 import { PiArrowUUpLeftThin } from "react-icons/pi";
+import './Bicycle.css'; // Import the CSS file
+import Footer from '../../components/footer/Footer';
 
 const Bicycle = () => {
-    // Puedes ajustar estos valores según tus necesidades
     const bicycleData = {
-        image: 'URL_IMAGEN_BICICLETA',
-        speed: '25 km/h', // Velocidad de la bicicleta
+        image: 'bicycle.png', // Replace with your image URL
+        speed: '25 km/h',
     };
 
     return (
-        <div>
+        <div className="bicycle-container">
             <Header title={'Bicicletas'} />
-            <div className="container mt-5">
-                <h1>Bicicleta</h1>
-
-                <div className="mb-4">
-                    <img src={bicycleData.image} alt="Bicicleta" className="img-fluid" />
+            <div className="bicycle-content">
+                <div className="bicycle-image-container">
+                    <img src={bicycleData.image} alt="Bicicleta" className="bicycle-image" />
                 </div>
 
-                <div className="mb-4">
-                    <h2>Velocidad:</h2>
-                    <p>{bicycleData.speed}</p>
+                <div className="bicycle-speed">
+                    <h1>Velocidad:</h1>
+                    <h2>{bicycleData.speed}</h2>
                 </div>
 
-                <div className="text-center">
-                    <Link to="/" className="text-muted">
-                        <PiArrowUUpLeftThin size={20} />
-                    </Link>
+                <div className="back-link">
+                    <Footer />
                 </div>
             </div>
         </div>

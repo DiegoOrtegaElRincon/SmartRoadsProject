@@ -1,46 +1,44 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../../components/header/Header';
+import './Main.css'; // Import your CSS file
 
 const Main = () => {
-    return (
-        <div>
-            <Header title={'Tracker'} />
-            <div className="container mt-5">
-
-                <div className="row mt-4">
-                    <div className="col-md-6 mb-4">
-                        <Link to="/bicycle">
-                            <img
-                                src="logo192.png"
-                                alt="Enlace a Bicicleta"
-                                className="img-fluid"
-                            />
-                        </Link>
-                    </div>
-
-                    <div className="col-md-6 mb-4">
-                        <Link to="/car">
-                            <img
-                                src="logo192.png"
-                                alt="Enlace a Coche"
-                                className="img-fluid"
-                            />
-                        </Link>
-                    </div>
-                </div>
-
-                <div className="text-center">
-                    <p>
-                        ¿Eres administrador?{' '}
-                        <Link to="/login" className="text-muted">
-                            Inicia sesión
-                        </Link>
-                    </p>
-                </div>
-            </div>
+  return (
+    <div className="main-container">
+      <Header title={'Tracker'} />
+      <div className="content-container">
+        <div className="link-container">
+          <Link to="/bicycle" className="image-link">
+            <img
+              src="bicycle.png" // Update with your image
+              alt="Enlace a Bicicleta"
+              className="responsive-image"
+            />
+          </Link>
         </div>
-    );
+
+        <div className="link-container">
+          <Link to="/car" className="image-link">
+            <img
+              src="car.png" // Update with your image
+              alt="Enlace a Coche"
+              className="responsive-image"
+            />
+          </Link>
+        </div>
+      </div>
+
+      <div className="login-prompt">
+        <p>
+          ¿Eres administrador?{' '}
+          <Link to="/login" className="login-link">
+            Inicia sesión
+          </Link>
+        </p>
+      </div>
+    </div>
+  );
 };
 
 export default Main;

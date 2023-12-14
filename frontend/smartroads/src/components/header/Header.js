@@ -1,11 +1,10 @@
 import React from 'react';
+import './Header.css'; // Make sure to import the CSS file
 
 const Header = ({ title }) => {
   return (
-    <header className="navbar navbar-dark bg-dark">
-      <div className="container">
-        <span className="navbar-brand">{title}</span>
-      </div>
+    <header className="header">
+      <h1 className="header-title">{title}</h1>
     </header>
   );
 };

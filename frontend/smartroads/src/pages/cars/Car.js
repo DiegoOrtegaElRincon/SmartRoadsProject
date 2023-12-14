@@ -2,33 +2,30 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../../components/header/Header';
 import { PiArrowUUpLeftThin } from "react-icons/pi";
+import './Car.css'; // Import the CSS file
+import Footer from '../../components/footer/Footer';
 
 const Car = () => {
-    // Puedes ajustar estos valores según tus necesidades
     const carData = {
-        image: 'URL_IMAGEN_COCHE',
-        speed: '150 km/h', // Velocidad del coche
+        image: 'car.png', // Replace with your image URL
+        speed: '150 km/h',
     };
 
     return (
-        <div>
+        <div className="car-container">
             <Header title={'Coches'} />
-            <div className="container mt-5">
-                <h1>Coche</h1>
-
-                <div className="mb-4">
-                    <img src={carData.image} alt="Coche" className="img-fluid" />
+            <div className="car-content">
+                <div className="car-image-container">
+                    <img src={carData.image} alt="Coche" className="car-image" />
                 </div>
 
-                <div className="mb-4">
-                    <h2>Velocidad:</h2>
-                    <p>{carData.speed}</p>
+                <div className="car-speed">
+                    <h1>Velocidad:</h1>
+                    <h2>{carData.speed}</h2>
                 </div>
 
-                <div className="text-center">
-                    <Link to="/" className="text-muted">
-                        <PiArrowUUpLeftThin size={20} />
-                    </Link>
+                <div className="back-link">
+                    <Footer />
                 </div>
             </div>
         </div>
