@@ -37,8 +37,11 @@ Administrador: Se encarga de gestionar los datos dentro del sistema.
 5. Funcionamiento y Especificaciones Técnicas
 
 Arquitectura del Sistema: Descripción de la estructura técnica.
+
 Componentes Clave: Descripción de las principales partes del sistema.
+
 Flujos de Datos: Cómo se mueven los datos dentro del sistema.
+
 Integraciones: Conexiones con otros sistemas o servicios.
 
 
