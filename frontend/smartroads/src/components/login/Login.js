@@ -19,17 +19,23 @@ const LoginForm = () => {
     }
   };
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault()
     try {
-      const response = await AuthService.signIn(username, password).then(next => {
-        localStorage.setItem('userInfo', JSON.stringify(response))
-        window.location.href = '/activeelements'
-      });
+      const response = await AuthService.signIn(username, password);
+      localStorage.setItem('userInfo', JSON.stringify(response));
+      window.location.href = '/activeelements';
     } catch (error) {
       console.error('Error de inicio de sesión:', error);
-      setError('Usuario o contraseña incorrectos');
+      
+      // Aquí podrías personalizar el mensaje de error basado en el tipo de error
+      if (error.response && error.response.data) {
+        setError(error.response.data.message);
+      } else {
+        setError('Ha ocurrido un error inesperado durante el inicio de sesión');
+      }
     }
-  };
+  };  
 
   return (
     <div className="submit-form">
