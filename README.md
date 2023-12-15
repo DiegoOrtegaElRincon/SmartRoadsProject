@@ -1,70 +1,71 @@
-1.- Introducción
 
-El proyecto SmartRoad, en colaboración con el Instituto Tecnológico de Canarias y el Proyecto de centro de Excelencia del IES El Rincón, se enfoca en crear un servicio de OpenData para la centralización de datos relacionados con la movilidad. Su principal objetivo es recopilar información de manera anónima sobre diversos elementos involucrados en la movilidad, como señales de tráfico, semáforos, estados de carreteras y vehículos. Este proyecto busca establecer una base de conocimiento (BigData) que sirva para otros proyectos, como la prevención de atascos y avisos de emergencias. Propuesto entonces, el desarrollo de "Alerta Ciclista", una aplicación que advierte a los conductores sobre la presencia de ciclistas en su ruta, utilizando los registros públicos de SmartRoad para detectar posibles encuentros entre vehículos y ciclistas.
+# 1. Introduction
 
-2.- Diagramas (Modelo de Datos)
+The SmartRoad project, in collaboration with the Instituto Tecnológico de Canarias and the IES El Rincón Center of Excellence Project, focuses on creating an OpenData service for centralizing mobility-related data. Its main objective is to anonymously collect information on various mobility elements such as traffic signs, traffic lights, road conditions, and vehicles. This project aims to establish a knowledge base (BigData) to serve other projects, such as traffic jam prevention and emergency alerts. Proposed then, the development of "Cyclist Alert", an application that warns drivers about the presence of cyclists on their route, using SmartRoad's public records to detect potential encounters between vehicles and cyclists.
+
+# 2. Diagrams (Data Model)
 
 [SmartRoads E-R.pdf](https://github.com/DiegoOrtegaElRincon/SmartRoadsProject/files/13675437/SmartRoads.E-R.pdf)
 
-Entidades Principales: El diagrama muestra entidades principales como ActiveElement, ChangingElement, PassiveElement, y Spot. Cada una con atributos específicos como UID, Type, y Location.
+Main Entities: The diagram shows main entities such as ActiveElement, ChangingElement, PassiveElement, and Spot. Each with specific attributes like UID, Type, and Location.
 
-Relaciones: Existe una relación significativa entre ActiveElement, ChangingElement, y Spot. Por ejemplo, un ActiveElement puede tener varios Spot, indicando múltiples ubicaciones o eventos asociados con un elemento activo.
+Relationships: There is a significant relationship between ActiveElement, ChangingElement, and Spot. For example, an ActiveElement can have multiple Spots, indicating multiple locations or events associated with an active element.
 
-Atributos: Atributos como UID (Identificador Único), Type (Tipo de elemento), y Status (Estado del elemento) son fundamentales para la identificación y gestión de datos en el sistema.
+Attributes: Attributes like UID (Unique Identifier), Type (Type of element), and Status (State of the element) are fundamental for data identification and management in the system.
 
-Administración: La entidad Administrator sugiere un sistema de gestión de usuarios con atributos como ID, Password y Username, esencial para la seguridad y administración del sistema.
+Administration: The Administrator entity suggests a user management system with attributes like ID, Password, and Username, essential for system security and administration.
 
 [SmartRoads Relational.pdf](https://github.com/DiegoOrtegaElRincon/SmartRoadsProject/files/13675454/SmartRoads.Relational.pdf)
 
-El diagrama relacional de SmartRoads muestra las entidades clave y sus relaciones. Incluye:
+The relational diagram of SmartRoads shows the key entities and their relationships. It includes:
 
-ActiveElement: Entidades activas en la carretera (señales, semáforos) con atributos como UID, tipo, velocidad y estado.
+ActiveElement: Active entities on the road (signals, traffic lights) with attributes like UID, type, speed, and status.
 
-ChangingElement: Elementos que pueden cambiar de estado, como señales dinámicas, con UID, tipo, estado y ubicación.
+ChangingElement: Elements that can change state, like dynamic signs, with UID, type, status, and location.
 
-PassiveElement: Elementos pasivos (por ejemplo, señales estáticas) identificados por UID, tipo y ubicación.
+PassiveElement: Passive elements (for example, static signs) identified by UID, type, and location.
 
-Spot: Ubicaciones específicas en la carretera vinculadas a elementos activos.
+Spot: Specific locations on the road linked to active elements.
 
-Info: Información asociada a elementos, con IDUID e información detallada.
+Info: Information associated with elements, with IDUID and detailed information.
 
-Administrator: Datos de los administradores del sistema, incluyendo ID, contraseña y nombre de usuario.
+Administrator: Data of the system administrators, including ID, password, and username.
 
 
-Este modelo establece la estructura de datos para la gestión y el seguimiento de los elementos de la carretera en el proyecto SmartRoads.
+This model establishes the data structure for managing and tracking road elements in the SmartRoads project.
 
 [SmartRoads UML.pdf](https://github.com/DiegoOrtegaElRincon/SmartRoadsProject/files/13675456/SmartRoads.UML.pdf)
 
 
-3. Requisitos de Usuario
+# 3. User Requirements
 
-Descripción General: Resumen de las necesidades de los usuarios.
+General Description: Summary of users' needs.
 
-Requisitos Funcionales: Lista de todas las funcionalidades requeridas.
+Functional Requirements: List of all required functionalities.
 
-Requisitos No Funcionales: Aspectos como seguridad, rendimiento y usabilidad.
+Non-Functional Requirements: Aspects such as security, performance, and usability.
 
 
-4. Casos de uso
+# 4. Use Cases
 [SmartRoads Case-Use.pdf](https://github.com/DiegoOrtegaElRincon/SmartRoadsProject/files/13675424/SmartRoads.Case-Use.pdf)
 
-Ciclista: Su función es enviar su ubicación al sistema.
+Cyclist: Their role is to send their location to the system.
 
-Conductor: Puede recibir notificaciones del sistema.
+Driver: Can receive notifications from the system.
 
-Administrador: Se encarga de gestionar los datos dentro del sistema.
+Administrator: Responsible for managing data within the system.
 
-5. Funcionamiento y Especificaciones Técnicas
+# 5. Operation and Technical Specifications
 
-Arquitectura del Sistema: Descripción de la estructura técnica.
+System Architecture: Description of the technical structure.
 
-Componentes Clave: Descripción de las principales partes del sistema.
+Key Components: Description of the main parts of the system.
 
-Flujos de Datos: Cómo se mueven los datos dentro del sistema.
+Data Flows: How data moves within the system.
 
-Integraciones: Conexiones con otros sistemas o servicios.
+Integrations: Connections with other systems or services.
 
-6.
+# 6. -
 
 ActiveElement (UID, Type, Speed, Status)
 ChangingElement (UID, Type, Status, Location)
@@ -73,10 +74,43 @@ Spot (ActiveElement_UID*, Location)
 Info (IDUID*, Information)
 Administrator (ID, Password, Username)
 
-9. Pila Tecnologica
-NodeJS: Utilizado como entorno de ejecución para JavaScript en el servidor. Es elegido por su eficiencia y escalabilidad, especialmente en aplicaciones en tiempo real.
-ExpressJS: Un framework minimalista y flexible para NodeJS, utilizado para construir aplicaciones web y API. Su simplicidad y capacidad de integración con otras tecnologías lo hacen ideal para este proyecto.
-Sequelize: Es un ORM (Object-Relational Mapping) para Node.js, que soporta la gestión de bases de datos SQL. Facilita las operaciones de base de datos y permite escribir código de base de datos en JavaScript.
-React: Una biblioteca de JavaScript para construir interfaces de usuario. Se utiliza para el frontend debido a su eficiencia y capacidad de crear aplicaciones web dinámicas y de alto rendimiento.
+# 9. Technology Stack
+NodeJS: Used as a server-side JavaScript execution environment. Chosen for its efficiency and scalability, especially in real-time applications.
+ExpressJS: A minimalist and flexible framework for NodeJS, used to build web applications and APIs. Its simplicity and ability to integrate with other technologies make it ideal for this project.
+Sequelize: An ORM (Object-Relational Mapping) for Node.js, supporting SQL database management. It facilitates database operations and allows writing database code in JavaScript.
+React: A JavaScript library for building user interfaces. Used for the frontend due to its efficiency and ability to create dynamic and high-performance web applications.
 
+## Comparison of Application Architectures for SmartRoads
+
+The SmartRoads project aims to centralize mobility data and provide critical services such as 'Cyclist Alert' to enhance road safety. Here's how different application architectures align with our project goals:
+
+### Native Apps
+- **Advantages:**
+  - Optimal performance which is crucial for real-time data processing and alerts.
+  - Direct access to hardware features such as GPS and push notifications, enhancing the functionality of Cyclist Alert.
+- **Disadvantages:**
+  - Separate development for Android and iOS can be resource-intensive, which may not be ideal for our initial development phase.
+
+### Hybrid Apps
+- **Advantages:**
+  - Ability to reach both Android and iOS users with one codebase aligns with our goal for a broad and inclusive data collection.
+  - Quicker prototyping which can speed up the initial launch of our project.
+- **Disadvantages:**
+  - Performance trade-offs could affect the responsiveness of real-time alerts.
+
+### Web Apps
+- **Advantages:**
+  - Immediate accessibility through a browser without the need for downloads could encourage more users to contribute mobility data.
+  - Easier to update and maintain, which is beneficial for a project that evolves based on collected data.
+- **Disadvantages:**
+  - Limited functionality in terms of native device features may restrict the capability of the Cyclist Alert system.
+
+### Progressive Web Apps (PWA)
+- **Advantages:**
+  - A middle ground with a native-like experience that can leverage device capabilities to a certain extent.
+  - Installable and capable of functioning offline, which ensures that users can receive alerts even in areas with poor connectivity.
+- **Disadvantages:**
+  - The varying degree of support across browsers can lead to inconsistent experiences for users.
+
+Given the project's focus on data centralization and real-time alerts, we are initially leaning towards a **PWA**. This approach allows us to leverage a wider user base with the installability and offline capabilities of a native app, while maintaining the ease of updates and maintenance of a web application. It also enables us to push updates quickly as the project scales and as user feedback is integrated into the application development.
 

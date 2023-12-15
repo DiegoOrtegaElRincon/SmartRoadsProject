@@ -8,18 +8,34 @@ const LoginForm = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleLogin = async () => {
+  const validateInput = (input, type) => {
+    const regex = /^[A-Za-z0-9_$#&]{0,12}$/; // Allow empty and up to 12 valid characters
+    if (regex.test(input)) {
+      if (type === 'username') {
+        setUsername(input);
+      } else if (type === 'password') {
+        setPassword(input);
+      }
+    }
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault()
     try {
       const response = await AuthService.signIn(username, password);
-
       localStorage.setItem('userInfo', JSON.stringify(response));
-
       window.location.href = '/activeelements';
     } catch (error) {
       console.error('Error de inicio de sesión:', error);
-      setError('Usuario o contraseña incorrectos');
+      
+      // Aquí podrías personalizar el mensaje de error basado en el tipo de error
+      if (error.response && error.response.data) {
+        setError(error.response.data.message);
+      } else {
+        setError('Ha ocurrido un error inesperado durante el inicio de sesión');
+      }
     }
-  };
+  };  
 
   return (
     <div className="submit-form">
@@ -31,9 +47,9 @@ const LoginForm = () => {
             type="text"
             className="form-control"
             id="username"
-            placeholder="Introduce email"
+            placeholder="Introduce username"
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => validateInput(e.target.value, 'username')}
           />
         </div>
         <div className="form-group">
@@ -43,13 +59,10 @@ const LoginForm = () => {
             id="password"
             placeholder="Introduce password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => validateInput(e.target.value, 'password')}
           />
         </div>
-        <button
-          className="button button1"
-          onClick={handleLogin}
-        >Login</button>
+        <button className="button" onClick={handleLogin}>Login</button>
       </form>
       <Footer />
     </div>

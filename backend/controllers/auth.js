@@ -51,14 +51,17 @@ exports.isAuthenticated = (req, res, next) => {
   // check token that was passed by decoding token using secret
   // .env should contain a line like JWT_SECRET=V3RY#1MP0RT@NT$3CR3T#
   jwt.verify(token, process.env.JWT_SECRET, function (err, admin) {
+    console.log(admin)
     if (err) return res.status(401).json({
       error: true,
       message: "Invalid token."
     });
 
     Admin.findOne({where: {Username: admin.Username}}).then(data => {
+      console.log('-------------------------------------------------------------')
+      console.log(data)
       // return 401 status if the userId does not match.
-      if (!data.Id) {
+      if (!data?.Id) {
         return res.status(401).json({
           error: true,
           message: "Invalid user."
