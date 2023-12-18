@@ -65,16 +65,17 @@ Data Flows: How data moves within the system.
 
 Integrations: Connections with other systems or services.
 
-# 6. -
+# 6. Interfaces
 
-ActiveElement (UID, Type, Speed, Status)
-ChangingElement (UID, Type, Status, Location)
-PassiveElement (UID, Type, Location)
-Spot (ActiveElement_UID*, Location)
-Info (IDUID*, Information)
-Administrator (ID, Password, Username)
+  # FIGMA DESIGN
+  https://www.figma.com/file/rSoixjKgNlR48boaPgNJs9/Proyect?type=design&node-id=0%3A1&mode=design&t=6s0y2zhvz5iYPoHg-1
+  
+  
+# 7. Manuals
+  # HELPNDOC
+[SmartRoadsHelpNDoc.pdf](https://github.com/DiegoOrtegaElRincon/SmartRoadsProject/files/13706440/SmartRoadsHelpNDoc.pdf)
 
-# 9. Technology Stack
+# 8. Technology Stack
 NodeJS: Used as a server-side JavaScript execution environment. Chosen for its efficiency and scalability, especially in real-time applications.
 ExpressJS: A minimalist and flexible framework for NodeJS, used to build web applications and APIs. Its simplicity and ability to integrate with other technologies make it ideal for this project.
 Sequelize: An ORM (Object-Relational Mapping) for Node.js, supporting SQL database management. It facilitates database operations and allows writing database code in JavaScript.
@@ -113,4 +114,10 @@ The SmartRoads project aims to centralize mobility data and provide critical ser
   - The varying degree of support across browsers can lead to inconsistent experiences for users.
 
 Given the project's focus on data centralization and real-time alerts, we are initially leaning towards a **PWA**. This approach allows us to leverage a wider user base with the installability and offline capabilities of a native app, while maintaining the ease of updates and maintenance of a web application. It also enables us to push updates quickly as the project scales and as user feedback is integrated into the application development.
+
+
+
+
+# HELPNDOC
+[SmartRoadsHelpNDoc.pdf](https://github.com/DiegoOrtegaElRincon/SmartRoadsProject/files/13706440/SmartRoadsHelpNDoc.pdf)
 
