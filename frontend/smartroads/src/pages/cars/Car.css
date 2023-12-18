@@ -1,0 +1,37 @@
+.car-container {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+.car-content {
+    margin-top: 20px;
+    padding: 20px;
+}
+
+.car-title {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.car-image-container {
+    margin-bottom: 20px;
+}
+
+.car-image {
+    max-width: 250px;
+    height: auto;
+    border-radius: 5px;
+}
+
+.car-speed {
+    margin-bottom: 20px;
+}
+
+.back-link {
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    /* Add responsive styles for smaller screens here */
+}

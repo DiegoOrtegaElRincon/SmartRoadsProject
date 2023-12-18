@@ -1,0 +1,44 @@
+.submit-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 95vh;
+    background: #63A994;
+    /* Fondo verde azulado */
+}
+
+.submit-form h1 {
+    color: #FFFFFF;
+    /* Título blanco */
+    margin-bottom: 30px;
+    /* Espacio debajo del título */
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-control {
+    width: 336px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background: #D9D9D9;
+    /* Fondo blanco para los inputs */
+    border: 1px solid #000000;
+    /* Borde negro para los inputs */
+    border-radius: 10px;
+    box-shadow: none;
+    /* Sin sombra */
+}
+
+.button {
+    background-color: #63A994;
+    color: white;
+    width: 336px;
+    height: 40px;
+    text-align: center;
+    font-size: 20px;
+    border: 2px solid black;
+    border-radius: 10px;
+}

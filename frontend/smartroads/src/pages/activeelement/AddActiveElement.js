@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ActiveElementDataService from "../../services/ActiveElementService";
+import AdminHeader from "../../components/header/AdminHeader";
 
 const AddActiveElement = () => {
   const initialActiveElementState = {
@@ -47,61 +48,64 @@ const AddActiveElement = () => {
   };
 
   return (
-    <div className="submit-form">
-      {error && <div className="alert alert-danger">{error}</div>}
-      {submitted ? (
-        <div>
-          <h4>You submitted successfully!</h4>
-          <button className="btn btn-success" onClick={newActiveElement}>
-            Add
-          </button>
-        </div>
-      ) : (
-        <div>
-          <div className="form-group">
-            <label htmlFor="Type">Type</label>
-            <input
-              type="text"
-              className="form-control"
-              id="Type"
-              required
-              value={activeElement.Type}
-              onChange={handleInputChange}
-              name="Type"
-            />
+    <div>
+      <AdminHeader />
+      <div className="submit-form">
+        {error && <div className="alert alert-danger">{error}</div>}
+        {submitted ? (
+          <div>
+            <h4>You submitted successfully!</h4>
+            <button className="btn btn-success" onClick={newActiveElement}>
+              Add
+            </button>
           </div>
+        ) : (
+          <div>
+            <div className="form-group">
+              <label htmlFor="Type">Type</label>
+              <input
+                type="text"
+                className="form-control"
+                id="Type"
+                required
+                value={activeElement.Type}
+                onChange={handleInputChange}
+                name="Type"
+              />
+            </div>
 
-          <div className="form-group">
-            <label htmlFor="Status">Status</label>
-            <input
-              type="text"
-              className="form-control"
-              id="Status"
-              required
-              value={activeElement.Status}
-              onChange={handleInputChange}
-              name="Status"
-            />
+            <div className="form-group">
+              <label htmlFor="Status">Status</label>
+              <input
+                type="text"
+                className="form-control"
+                id="Status"
+                required
+                value={activeElement.Status}
+                onChange={handleInputChange}
+                name="Status"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="Speed">Speed</label>
+              <input
+                type="Speed"
+                className="form-control"
+                id="Speed"
+                required
+                onChange={handleInputChange}
+                name="Speed"
+                multiple
+              />
+            </div>
+
+            <button onClick={saveActiveElement} className="btn btn-success">
+              Submit
+            </button>
           </div>
-
-          <div className="form-group">
-            <label htmlFor="Speed">Speed</label>
-            <input
-              type="Speed"
-              className="form-control"
-              id="Speed"
-              required
-              onChange={handleInputChange}
-              name="Speed"
-              multiple
-            />
-          </div>
-
-          <button onClick={saveActiveElement} className="btn btn-success">
-            Submit
-          </button>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

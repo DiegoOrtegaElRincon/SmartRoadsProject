@@ -1,6 +1,8 @@
 const db = require("../models/db");
 const Admin = db.Admin;
 const Op = db.Sequelize.Op;
+const utils = require("../utils");
+const bcrypt = require('bcryptjs');
 const path = require('path');
 const fs = require("fs");
 
@@ -12,19 +14,48 @@ exports.create = (req, res) => {
             message: "Content cannot be empty!"
         });
     }
+
     // Create a Admin
     const admin = {
         Username: req.body.username,
         Password: req.body.password,
-        filename: req.file ? req.file.filename : ""
+        filename: req.file ? req.file.filename : "placeholder-img.jpg",
+        isAdmin: req.body.isAdmin ? req.body.isAdmin : false
     }
-    // Save Admin in the database
-    Admin.create(admin).then(data => {
-        res.send(data);
+
+    Admin.findOne({ where: { Username: admin.Username } }).then(data => {
+        if (data) {
+            const result = bcrypt.compareSync(admin.Password, data.password);
+            if (!result) return res.status(401).send('Password not valid!');
+            const token = utils.generateToken(data);
+            // get basic admin details
+            const userObj = utils.getCleanUser(data);
+            // return the token along with admin details
+            return res.json({ admin: userObj, access_token: token });
+        }
+
+        admin.Password = bcrypt.hashSync(req.body.password);
+
+        // Save Admin in the database
+        Admin.create(admin)
+            .then(data => {
+                const token = utils.generateToken(data);
+                // get basic admin details
+                const userObj = utils.getCleanUser(data);
+                // return the token along with admin details
+                return res.json({ admin: userObj, access_token: token });
+            }).catch(err => {
+                res.status(500).send({
+                    message:
+                        err.message || "Some error occurred while creating the User."
+                });
+            });
+
     }).catch(err => {
         res.status(500).send({
-            message: err.message || "Some error occurred while creating the admin"
-        })
+            message:
+                err.message || "Some error occurred while retrieving admins."
+        });
     });
 };
 
@@ -43,7 +74,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    Admin.findByPk(id).then(data => {
+    Admin.findByPk(id, { attributes: { exclude: ['Password'] } }).then(data => {
         if (data) {
             res.send(data);
         } else {
@@ -83,9 +114,14 @@ exports.update = async (req, res) => {
         });
     }
 
+
+    if (req.body.Password) {
+        admin.Password = bcrypt.hashSync(req.body.password);
+    }
+
     try {
 
-        if (IsThere.filename && IsThere.filename != "") {
+        if (IsThere.filename && IsThere.filename != "" && (IsThere.filename != 'placeholder-image.jpg')) {
             const directoryPath = path.join(__dirname, '../public/images', IsThere.filename);
             fs.unlinkSync(directoryPath);
         }
@@ -112,13 +148,14 @@ exports.update = async (req, res) => {
 exports.updateNoImage = async (req, res) => {
     const id = req.params.id
     let uwu = await Admin.findByPk(id)
+
+    const Pwd = req.body.Password;
+    const cryptedPwd = await bcrypt.hash(Pwd, 10);
     let admin = {
-        Username: req.body.username,
-        Password: req.body.password,
+        Username: req.body.Username,
+        Password: cryptedPwd,
         filename: ""
     };
-
-    console.log(admin)
 
     try {
         const num = await Admin.update(admin, {
@@ -126,18 +163,18 @@ exports.updateNoImage = async (req, res) => {
         });
 
         if (num == 1) {
-            console.log(uwu.get({ plain: true }))
             uwu = uwu.get({ plain: true })
             const directoryPath = path.join(__dirname, '../public/images', uwu.filename);
             if (fs.existsSync(directoryPath)) {
-                fs.unlink(directoryPath, (err) => {
-                    if (err) {
-                        console.error("Error deleting image file: ", err);
-                    } else {
-                        console.log("Image file deleted: ", directoryPath);
-                    }
-                });
-                console.log("Image file deleted: ", directoryPath)
+                if (uwu.filename != '' && (uwu.filename != 'placeholder-image.jpg')) {
+                    fs.unlink(directoryPath, (err) => {
+                        if (err) {
+                            console.error("Error deleting image file: ", err);
+                        } else {
+                            console.log("Image file deleted: ", directoryPath);
+                        }
+                    })
+                };
             } else {
                 console.error('File does not exist: ', directoryPath);
             }
@@ -170,7 +207,7 @@ exports.delete = async (req, res) => {
         }
 
         try {
-            if (AdminExists.filename) {
+            if (AdminExists.filename && (AdminExists.filename != 'placeholder-image.jpg')) {
                 const directoryPath = path.join(__dirname, '../public/images', AdminExists.filename);
                 if (fs.existsSync(directoryPath)) {
                     fs.unlink(directoryPath, (err) => {
@@ -201,17 +238,59 @@ exports.delete = async (req, res) => {
 
 
 exports.deleteAll = (req, res) => {
-    Admin.destroy({
-      where: {},
-      truncate: false
-    })
-      .then(nums => {
-        res.send({ message: `${nums} Admins were deleted successfully!` });
-      })
-      .catch(err => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while removing all Admins."
+
+    Admin.findAll()
+        .then(admins => {
+            const imageFileNames = [];
+
+            admins.forEach(admin => {
+                if (admin.filename && (admin.filename != 'placeholder-image.jpg')) {
+                    imageFileNames.push(admin.filename);
+                }
+            });
+
+            imageFileNames.forEach(fileName => {
+                const imagePath = path.join(__dirname, '../public/images/', fileName);
+                fs.unlink(imagePath, (err) => {
+                    if (err) {
+                        console.error('Error deleting image:', err);
+                    }
+                });
+            });
+
+            const admin1 = Admin.findOne({
+                order: [ [ 'Id', 'ASC' ]],
+            })
+
+            Admin.destroy({
+                where: { [Op.ne]: admin1.Id },
+                truncate: false
+            })
+                .then(nums => {
+                    res.send({ message: `${nums} Admins were deleted successfully!` });
+                })
+                .catch(err => {
+                    res.status(500).send({
+                        message:
+                            err.message || "Some error occurred while removing all Admins."
+                    });
+                });
+        })
+};
+
+
+exports.findUserByUsernameAndPassword = (req, res) => {
+    const user = req.body.username;
+    const pwd = req.body.password;
+
+    Admin.findOne({ where: { Username: user, Password: pwd } })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving admins."
+            });
         });
-      });
-  };
+};

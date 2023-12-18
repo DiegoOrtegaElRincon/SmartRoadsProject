@@ -1,0 +1,35 @@
+.custom-nav-container {
+    background-color: #D9D9D9; /* or any color you prefer */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100vw;
+    height: 10vh;
+    display: flex;
+    align-items: center;
+}
+
+.custom-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 10px 0;
+}
+
+.nav-items {
+    display: flex;
+    list-style-type: none; /* Removes default list styling */
+    align-items: baseline;
+    text-align: center;
+}
+
+.nav-item-link {
+    color: #000000; /* Text color */
+    font-weight: bold;
+    margin: 0 10px;
+    text-decoration: none; /* Removes underline from links */
+    padding: 5px 10px; /* Padding for clickable area */
+}
+
+.nav-item-link:hover {
+    color: #0056b3; /* Text color on hover */
+    border-bottom: 3px solid #0056b3; /* Underline effect on hover */
+}

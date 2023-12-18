@@ -1,0 +1,33 @@
+.custom-footer {
+    color: white;
+    padding: 10px 0;
+    text-align: left;
+    border-top: none;
+  }
+  
+  .footer-container {
+    max-width: 1200px; /* or the max width of your content */
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+  }
+  
+  .home-button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+  
+  /* Adjust the size and padding as needed */
+  .home-button .pi {
+    margin-right: 10px;
+  }
+  
+  /* Media query for responsiveness */
+  @media (max-width: 768px) {
+    .footer-container {
+      justify-content: center;
+    }
+  }
+  

@@ -1,0 +1,14 @@
+.header {
+    background-color: #D9D9D9;
+    /* Dark background */
+    color: #000000;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.header-title {
+    font-size: 2.5rem;
+    /* Large font size */
+    font-weight: bold;
+    margin: 0;
+}

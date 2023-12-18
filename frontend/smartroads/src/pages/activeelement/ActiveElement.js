@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from 'react-router-dom';
 import ActiveElementService from "../../services/ActiveElementService"; // Update with the actual service
+import AdminHeader from "../../components/header/AdminHeader";
 
 const ActiveElement = () => {
     const { id } = useParams();
     let navigate = useNavigate();
 
     const initialActiveElementState = {
-        Type: "",
-        Status: "",
-        Speed: "",
+        UID: null,
+        type: "",
+        status: "",
+        speed: "",
     };
 
     const [currentActiveElement, setCurrentActiveElement] = useState(initialActiveElementState);
@@ -19,7 +21,6 @@ const ActiveElement = () => {
         ActiveElementService.get(id)
             .then(response => {
                 setCurrentActiveElement(response.data);
-                console.log(response.data);
             })
             .catch(e => {
                 console.log(e);
@@ -39,7 +40,7 @@ const ActiveElement = () => {
     const updateActiveElement = () => {
         ActiveElementService.update(currentActiveElement.UID, currentActiveElement)
             .then(response => {
-                console.log(response.data);
+                console.log(response)
                 setMessage("The activeElement was updated successfully!");
             })
             .catch(e => {
@@ -60,65 +61,68 @@ const ActiveElement = () => {
 
     return (
         <div>
-            {currentActiveElement ? (
-                <div className="edit-form">
-                    <h4>ActiveElement</h4>
-                    <form>
-                        <div className="form-group">
-                            <label htmlFor="Type">Type</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="Type"
-                                name="Type"
-                                value={currentActiveElement.Type}
-                                onChange={handleInputChange}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="Status">Status</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="Status"
-                                name="Status"
-                                value={currentActiveElement.Status}
-                                onChange={handleInputChange}
-                            />
-                        </div>
+            <AdminHeader />
+            <div>
+                {currentActiveElement ? (
+                    <div className="edit-form">
+                        <h4>ActiveElement</h4>
+                        <form>
+                            <div className="form-group">
+                                <label htmlFor="type">Type</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="type"
+                                    name="type"
+                                    value={currentActiveElement.type}
+                                    onChange={handleInputChange}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="status">Status</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="status"
+                                    name="status"
+                                    value={currentActiveElement.status}
+                                    onChange={handleInputChange}
+                                />
+                            </div>
 
-                        <div className="form-group">
-                            <label htmlFor="Speed">Speed</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="Speed"
-                                name="Speed"
-                                value={currentActiveElement.Speed}
-                                onChange={handleInputChange}
-                            />
-                        </div>
-                    </form>
+                            <div className="form-group">
+                                <label htmlFor="speed">Speed</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="speed"
+                                    name="speed"
+                                    value={currentActiveElement.speed}
+                                    onChange={handleInputChange}
+                                />
+                            </div>
+                        </form>
 
-                    <button className="badge badge-danger mr-2" type="button" onClick={deleteActiveElement}>
-                        Delete
-                    </button>
+                        <button className="badge badge-danger mr-2" type="button" onClick={deleteActiveElement}>
+                            Delete
+                        </button>
 
-                    <button
-                        type="submit"
-                        className="badge badge-success"
-                        onClick={updateActiveElement}
-                    >
-                        Update
-                    </button>
-                    <p>{message}</p>
-                </div>
-            ) : (
-                <div>
-                    <br />
-                    <p>Please click on an ActiveElement...</p>
-                </div>
-            )}
+                        <button
+                            type="submit"
+                            className="badge badge-success"
+                            onClick={updateActiveElement}
+                        >
+                            Update
+                        </button>
+                        <p>{message}</p>
+                    </div>
+                ) : (
+                    <div>
+                        <br />
+                        <p>Please click on an ActiveElement...</p>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };
