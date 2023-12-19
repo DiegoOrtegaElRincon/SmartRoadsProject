@@ -9,7 +9,7 @@ The SmartRoad project, in collaboration with the Instituto Tecnológico de Canar
 
 Main Entities: The diagram shows main entities such as ActiveElement, ChangingElement, PassiveElement, and Spot. Each with specific attributes like UID, Type, and Location.
 
-Relationships: There is a significant relationship between ActiveElement, ChangingElement, and Spot. For example, an ActiveElement can have multiple Spots, indicating multiple locations or events associated with an active element.
+Relationships: There is a significant relationship between ActiveElement and Spot. For example, an ActiveElement can have multiple Spots, indicating multiple locations or events associated with an active element.
 
 Attributes: Attributes like UID (Unique Identifier), Type (Type of element), and Status (State of the element) are fundamental for data identification and management in the system.
 
