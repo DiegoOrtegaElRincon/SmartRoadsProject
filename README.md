@@ -5,7 +5,7 @@ The SmartRoad project, in collaboration with the Instituto Tecnológico de Canar
 
 # 2. Diagrams (Data Model)
 
-[SmartRoads E-R.pdf](https://github.com/DiegoOrtegaElRincon/SmartRoadsProject/files/13675437/SmartRoads.E-R.pdf)
+![imagen](https://github.com/DiegoOrtegaElRincon/SmartRoadsProject/assets/118464823/d90dbe2c-9c70-49de-a6c8-23445b995546)
 
 Main Entities: The diagram shows main entities such as ActiveElement, ChangingElement, PassiveElement, and Spot. Each with specific attributes like UID, Type, and Location.
 
@@ -15,7 +15,7 @@ Attributes: Attributes like UID (Unique Identifier), Type (Type of element), and
 
 Administration: The Administrator entity suggests a user management system with attributes like ID, Password, and Username, essential for system security and administration.
 
-[SmartRoads Relational.pdf](https://github.com/DiegoOrtegaElRincon/SmartRoadsProject/files/13675454/SmartRoads.Relational.pdf)
+![imagen](https://github.com/DiegoOrtegaElRincon/SmartRoadsProject/assets/118464823/2b844736-464b-40be-8f84-c8b4a0edf4b3)
 
 The relational diagram of SmartRoads shows the key entities and their relationships. It includes:
 
@@ -34,7 +34,7 @@ Administrator: Data of the system administrators, including ID, password, and us
 
 This model establishes the data structure for managing and tracking road elements in the SmartRoads project.
 
-[SmartRoads UML.pdf](https://github.com/DiegoOrtegaElRincon/SmartRoadsProject/files/13675456/SmartRoads.UML.pdf)
+![imagen](https://github.com/DiegoOrtegaElRincon/SmartRoadsProject/assets/118464823/8c1d0f0c-0856-43bd-805f-c7fcc7fff0d6)
 
 
 # 3. User Requirements
@@ -47,7 +47,7 @@ Non-Functional Requirements: Aspects such as security, performance, and usabilit
 
 
 # 4. Use Cases
-[SmartRoads Case-Use.pdf](https://github.com/DiegoOrtegaElRincon/SmartRoadsProject/files/13675424/SmartRoads.Case-Use.pdf)
+![imagen](https://github.com/DiegoOrtegaElRincon/SmartRoadsProject/assets/118464823/7067ae34-b435-49df-b7e8-465392b2feef)
 
 Cyclist: Their role is to send their location to the system.
 
@@ -114,10 +114,3 @@ The SmartRoads project aims to centralize mobility data and provide critical ser
   - The varying degree of support across browsers can lead to inconsistent experiences for users.
 
 Given the project's focus on data centralization and real-time alerts, we are initially leaning towards a **PWA**. This approach allows us to leverage a wider user base with the installability and offline capabilities of a native app, while maintaining the ease of updates and maintenance of a web application. It also enables us to push updates quickly as the project scales and as user feedback is integrated into the application development.
-
-
-
-
-# HELPNDOC
-[SmartRoadsHelpNDoc.pdf](https://github.com/DiegoOrtegaElRincon/SmartRoadsProject/files/13706440/SmartRoadsHelpNDoc.pdf)
-
