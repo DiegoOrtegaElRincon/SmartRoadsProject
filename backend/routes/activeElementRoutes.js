@@ -6,6 +6,7 @@ module.exports = (app) => {
 
     // Rutas para ActiveElements
     router.get('/', auth.isAuthenticated, activeElementController.findAll);
+    router.get('/jsreport', activeElementController.findAll);
     router.post('/', auth.isAuthenticated, activeElementController.create);
     router.get('/:id', auth.isAuthenticated, activeElementController.findOne);
     router.put('/:id', auth.isAuthenticated, activeElementController.update);

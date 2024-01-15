@@ -19,6 +19,7 @@ const AdminHeader = () => {
                     <Link to={"/passiveelements"} className="nav-item-link">
                         PassiveE
                     </Link>
+                    <Link to={"http://localhost:5488/templates/fNdZsQC"} className="nav-item-link">Reports</Link>
                 </div>
             </div>
         </div>
