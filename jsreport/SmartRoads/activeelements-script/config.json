@@ -1,0 +1,19 @@
+{
+    "name": "activeelements-script",
+    "inheritedReadPermissions": [],
+    "inheritedEditPermissions": [],
+    "creationDate": {
+        "$$date": 1705316565036
+    },
+    "modificationDate": {
+        "$$date": 1705345149704
+    },
+    "shortid": "HF_hozn",
+    "_id": "wW22fTMm4E9EPrWK",
+    "$entitySet": "scripts",
+    "scope": "template",
+    "isGlobal": false,
+    "entitySet": "scripts",
+    "type": "entity",
+    "key": "wW22fTMm4E9EPrWK"
+}
